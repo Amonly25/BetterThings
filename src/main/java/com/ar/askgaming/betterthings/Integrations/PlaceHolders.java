@@ -1,4 +1,4 @@
-package com.ar.askgaming.betterthings.hooks;
+package com.ar.askgaming.betterthings.Integrations;
 
 import org.bukkit.entity.Player;
 

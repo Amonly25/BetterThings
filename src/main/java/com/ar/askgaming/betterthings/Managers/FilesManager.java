@@ -1,10 +1,12 @@
-package com.ar.askgaming.betterthings;
+package com.ar.askgaming.betterthings.Managers;
 
 import java.io.File;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import com.ar.askgaming.betterthings.BetterThings;
 
 public class FilesManager extends BukkitRunnable{
     

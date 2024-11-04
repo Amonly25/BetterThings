@@ -1,4 +1,4 @@
-package com.ar.askgaming.betterthings.listeners;
+package com.ar.askgaming.betterthings.Listeners;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,15 +15,15 @@ public class PlayerQuitListener implements Listener{
     }
     @EventHandler()
     public void onQuit(PlayerQuitEvent e) {
-        //Save the Player's Thirst and Fatigue
+
         Player p = e.getPlayer();
         
-       if (plugin.getThirstManager().get().containsKey(p)){
-            plugin.getThirstManager().get().remove(p);        
+       if (plugin.getThirstManager().getMap().containsKey(p)){
+            plugin.getThirstManager().getMap().remove(p);        
        }
 
-       if (plugin.getFatigueManager().get().containsKey(p)){
-            plugin.getFatigueManager().get().remove(p);        
+       if (plugin.getFatigueManager().getMap().containsKey(p)){
+            plugin.getFatigueManager().getMap().remove(p);        
        }
     }
 }
