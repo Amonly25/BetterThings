@@ -1,0 +1,10 @@
+com\ar\askgaming\betterthings\Commands.class
+com\ar\askgaming\betterthings\Events\IncreaseThirstEvent.class
+com\ar\askgaming\betterthings\BetterThings.class
+com\ar\askgaming\betterthings\Integrations\PlaceHolders.class
+com\ar\askgaming\betterthings\Managers\FatigueManager.class
+com\ar\askgaming\betterthings\Events\IncreaseFatigueEvent.class
+com\ar\askgaming\betterthings\Listeners\PlayerJoinListener.class
+com\ar\askgaming\betterthings\Managers\ThirstManager.class
+com\ar\askgaming\betterthings\Listeners\PlayerQuitListener.class
+com\ar\askgaming\betterthings\Managers\FilesManager.class

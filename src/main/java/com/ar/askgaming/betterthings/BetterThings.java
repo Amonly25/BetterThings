@@ -2,11 +2,11 @@ package com.ar.askgaming.betterthings;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-
 import com.ar.askgaming.betterthings.Listeners.PlayerJoinListener;
 import com.ar.askgaming.betterthings.Listeners.PlayerQuitListener;
-import com.ar.askgaming.betterthings.listeners.PlayerJoinListener;
-import com.ar.askgaming.betterthings.listeners.PlayerQuitListener;
+import com.ar.askgaming.betterthings.Managers.FatigueManager;
+import com.ar.askgaming.betterthings.Managers.FilesManager;
+import com.ar.askgaming.betterthings.Managers.ThirstManager;
 
 public class BetterThings extends JavaPlugin{
 

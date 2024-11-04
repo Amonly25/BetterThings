@@ -13,10 +13,10 @@ public class IncreaseThirstEvent extends Event{
     private Player player;
     private int thirst;
 
-    public IncreaseThirstEvent(Player player, int thirst) {
+    public IncreaseThirstEvent(Player player, int thirst,String message) {
         this.player = player;
         this.thirst = thirst;
-
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, message);
     }
 
     public Player getPlayer() {
