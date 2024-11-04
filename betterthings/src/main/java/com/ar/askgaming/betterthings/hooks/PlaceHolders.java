@@ -1,13 +1,15 @@
-package betterthings;
+package com.ar.askgaming.betterthings.hooks;
 
 import org.bukkit.entity.Player;
+
+import com.ar.askgaming.betterthings.BetterThings;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
 public class PlaceHolders extends PlaceholderExpansion {
 
-	static Main plugin;
-	public PlaceHolders(Main main) {
+	private BetterThings plugin;
+	public PlaceHolders(BetterThings main) {
 		plugin = main;
 	}
 	

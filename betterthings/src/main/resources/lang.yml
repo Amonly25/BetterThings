@@ -1,0 +1,38 @@
+tootired: '&cI am too tired to do that, I should sleep first.'
+tiredtorun: '&cI am too tired to run..'
+regenthirst: '&cYou will not regenerate life with such thirst'
+regenfatigue: '&cYou wont regenerate life when you are so tired'
+restinday: '&2I have not slept but I have rested something'
+nottired: '&2Im not tired enough to sleep now.'
+aftersleep: '&2Mhh, sleeping has made me a little hungry..'
+ongivethirst: '&2You gave full thirst to '
+thirst_enable: "&3Thirst is now &aenable&3 for you"
+thirst_disable: "&3Thirst is now &cdisable&3 for you"
+fatigue_enable: "&6Fatigue is now &aenable &6for you"
+fatihue_disable: "&6Fatigue is now &cdisable &6for you"
+ongivefatigue: '&2You gave full fatigue to '
+onrefreshthirst: '&2You refresh thirst of '
+onrefreshfatigue: '&2You refresh fatigue of '
+onthirstchange: '&2Your thirst has been changed.'
+onfatiguechange: '&2You Fatigue has been changed.'
+reload: '&aConfig reloaded'
+playersleep: 'Players sleeping: ' 
+tochangeday: '&7A total of &c%sleeping%&8/%total%&7 players have slept, being more than 33%&c(%percent%), &7the night will pass soon'
+newday: 'Enough players slept, good morning...'
+no_money: "&cYou dont have enought money."
+buy: "&7Has bought a %item% with succes"
+cost: "&7Price: &a$%cost%"
+toggle: "&a%mode% for you is now %state%"
+toggle_disable: "&cThe toggle option is disabled"
+help:
+- ''
+- '&7>> &7BetterThings Help Menu'
+- '&7>> &3/thirst'
+- '&7>> &3/fatigue'
+- ''
+- '&7>> &6/betterthings &fmaxthirst'
+- '&7>> &6/betterthings &frefreshthirst'
+- '&7>> &6/betterthings &fmaxfatigue'
+- '&7>> &6/betterthings &frefreshfatigue'
+- '&7>> &6/betterthings &7coffe, wine, lemonade, juice, godjuice, milk'
+- ''
