@@ -29,10 +29,9 @@ public class ActionBarTask extends BukkitRunnable{
     public void run() {
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             setEmojiMessage(p);
-
-            if (plugin.getThirstManager().hasEnabled(p) || plugin.getFatigueManager().hasEnabled(p)){
-
-                if (constantActionBar){
+            if (constantActionBar){
+                if (plugin.getThirstManager().hasEnabled(p) || plugin.getFatigueManager().hasEnabled(p)){
+                    
                     String message = getEmojiMessage(p);
                     if (!message.isEmpty()) {
                         p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacy(message));

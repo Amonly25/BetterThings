@@ -11,9 +11,6 @@ import org.bukkit.entity.Player;
 import com.ar.askgaming.betterthings.Managers.FatigueManager;
 import com.ar.askgaming.betterthings.Managers.ThirstManager;
 
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
-
 public class Commands implements TabExecutor {
 	
 	private BetterThings plugin;
@@ -70,15 +67,8 @@ public class Commands implements TabExecutor {
 			}
 			p.sendMessage(plugin.getFiles().getLang("thirst.disabled"));
 			
-		} else {
-			switch (args[0].toLowerCase()) {
-				case "toggle":
-					t.toggle(p);
-					break;
-				default:
-					p.sendMessage("args[0] is not a valid argument");
-					break;
-			}
+		} else if (args[0].equalsIgnoreCase("toggle")) {
+			t.toggle(p);
 		}
 
 	}
@@ -96,15 +86,8 @@ public class Commands implements TabExecutor {
 			}
 			p.sendMessage(plugin.getFiles().getLang("fatigue.disabled"));
 
-		} else {
-			switch (args[0].toLowerCase()) {
-				case "toggle":
-					f.toggle(p);
-					break;
-				default:
-					p.sendMessage("args[0] is not a valid argument");
-					break;
-			}
+		} else if (args[0].equalsIgnoreCase("toggle")) {
+			f.toggle(p);
 		}
 		
 	}

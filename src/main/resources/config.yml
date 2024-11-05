@@ -1,36 +1,32 @@
- # Config File
- # BetterThings
- # By Ask Gaming(Amonly)
+# Config File - BetterThings - By Ask Gaming(Amonly)
+# If you need help, please contact me on Discord: 
+
+constant_action_bar: true
+
 thirst: # Max 200
   enable: true
   emoji: 🍶
-  howmuch: 4 # How much thirst will be decreased per minute
-  enableworlds:
+  increase: 4 # How much thirst will be decreased per minute
+  amount_on_fire_blocks: true
+  deny_actions:
+    
+  enable_worlds:
   - world
   - world_nether
-  50:
-    msg: '&bIm a little thirsty..'
-  100:
-    msg: '&bIm so thirsty..'
-  150:
-    msg: '&bIm dying of thirst'  
+     
 fatigue: # Max 250
   enable: true
   emoji: 🛌
-  howmuch: 2 # How much fatigue will be decreased per minute
-  enableworlds:
+  increase: 2 # How much fatigue will be decreased per minute
+  deny_actions:
+    regain_health_below : 50
+  enable_worlds:
   - world
   - world_the_end
-  100:
-    msg: '&cIm a little sleepy..'
-  150:
-    msg: '&cI am very sleepy.. but I can continue!'
-  200:
-    msg: '&cI am very tired, I should sleep..'  
-constant_action_bar: true
-sleepfeature:
+
+sleep_feature:
   enable: true
-enablerecipes: true  
+
 materials:
 - WHITE_BED
 - RED_BED

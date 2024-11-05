@@ -12,11 +12,12 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 public class IncreaseThirstEvent extends Event{
 
+    private BetterThings plugin = BetterThings.getPlugin(BetterThings.class);
+
     private final HandlerList handlers = new HandlerList();
     private Player player;
     private int thirst;
     private String message;
-    private BetterThings plugin = BetterThings.getPlugin(BetterThings.class);
 
     public IncreaseThirstEvent(Player player, int thirst,String message) {
         this.player = player;

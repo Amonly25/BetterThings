@@ -21,10 +21,10 @@ public class PlaceHolders extends PlaceholderExpansion {
         }
 
         if(identifier.equals("thirst")){
-        	return String.valueOf(plugin.getConfig().getInt("players.thirst." + player.getUniqueId()));
+        	return String.valueOf(plugin.getThirstManager().getCurrent(player));
         }
         if(identifier.equals("fatigue")){
-        	return String.valueOf(plugin.getConfig().getInt("players.fatigue." + player.getUniqueId()));
+        	return String.valueOf(plugin.getFatigueManager().getCurrent(player));
         }
 		
 		return null;

@@ -12,7 +12,12 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 public class IncreaseFatigueEvent extends Event{
 
+    private final HandlerList handlers = new HandlerList();
+
     private BetterThings plugin = BetterThings.getPlugin(BetterThings.class);
+    private Player player;
+    private String message;
+    private int fatigue;
 
     public IncreaseFatigueEvent(Player player, int fatigue, String message) {
         this.player = player;
@@ -33,9 +38,6 @@ public class IncreaseFatigueEvent extends Event{
         }.runTaskTimer(plugin, 0L, 20L);
     }
 
-    private final HandlerList handlers = new HandlerList();
-    private Player player;
-    private String message;
     public String getMessage() {
         return message;
     }
@@ -47,8 +49,6 @@ public class IncreaseFatigueEvent extends Event{
     public void setPlayer(Player player) {
         this.player = player;
     }
-
-    private int fatigue;
 
     public Player getPlayer() {
         return player;

@@ -1,6 +1,5 @@
 package com.ar.askgaming.betterthings.Drinks;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Color;
@@ -16,11 +15,17 @@ import org.bukkit.potion.PotionType;
 
 import com.ar.askgaming.betterthings.BetterThings;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class Items {
+
+    private NamespacedKey key;
 
     private BetterThings plugin;
     public Items(BetterThings main) {
         plugin = main;
+
+        key = new NamespacedKey(plugin, "drink_type");
     }
 
     public enum DrinkType {
@@ -35,14 +40,15 @@ public class Items {
         PotionMeta meta = (PotionMeta) d.getItemMeta();
         meta.setBasePotionType(PotionType.WATER);
 
-        NamespacedKey key = new NamespacedKey(plugin, "drink_type");
         meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, drinkType.toString());
 
         List<String> lore = cfg.getStringList(drinkType.toString()+".lore");
         String name = cfg.getString(drinkType.toString()+".name","Unknown");
         Color color = getColorFromConfig(drinkType.toString()+".color");
 
-        meta.setDisplayName(name);
+        lore.forEach(s -> s = ChatColor.translateAlternateColorCodes('&', s));
+
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
         meta.setLore(lore);
         meta.setColor(color);
 
@@ -60,7 +66,7 @@ public class Items {
     private Color getColorFromConfig(String path) {
         FileConfiguration cfg = plugin.getFiles().getItemsConfig();
         String colorString = cfg.getString(path);
-        if (colorString != null) {
+        if (colorString != null && colorString.matches("^#([A-Fa-f0-9]{6})$")) {
             try {
                 return Color.fromRGB(
                     Integer.valueOf(colorString.substring(1, 3), 16),
@@ -70,7 +76,39 @@ public class Items {
             } catch (NumberFormatException e) {
                 plugin.getLogger().info("Invalid color format for " + path + ": " + colorString);
             }
+        } else {
+            plugin.getLogger().info("Invalid color format for " + path + ": " + colorString);
         }
-        return Color.WHITE; // Valor predeterminado en caso de error
+        return Color.BLUE;
     }
+    private int getValueFromConfig(ItemStack item, String valueType) {
+        if (item.hasItemMeta()) {
+            PotionMeta meta = (PotionMeta) item.getItemMeta();
+            if (meta.getPersistentDataContainer().has(key, PersistentDataType.STRING)) {
+                String drinkType = meta.getPersistentDataContainer().get(key, PersistentDataType.STRING);
+                return plugin.getFiles().getItemsConfig().getInt(drinkType + "." + valueType, 0);
+            }
+        }
+        return 0;
+    }
+    
+    public int getCost(ItemStack item) {
+        return getValueFromConfig(item, "shop_cost");
+    }
+    
+    public int thirstValue(ItemStack item) {
+        return getValueFromConfig(item, "thirst_value");
+    }
+    
+    public int fatigueValue(ItemStack item) {
+        return getValueFromConfig(item, "fatigue_value");
+    }
+    public boolean isDrink(ItemStack item) {
+        if (item.hasItemMeta()){
+            PotionMeta meta = (PotionMeta) item.getItemMeta();
+            return meta.getPersistentDataContainer().has(key, PersistentDataType.STRING);
+        }
+        return false;
+    }
+
 }

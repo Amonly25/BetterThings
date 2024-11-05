@@ -1,51 +1,74 @@
+##Default items are excluded from the shop
+default_items:
+  MILK_BUCKET:
+    thirst_value: 60
+    fatigue_value: 10
+  MUSHROOM_STEW:
+    thirst_value: 40
+    fatigue_value: 10 
+    
 WATER:
   name: "&3Water"
-  color: Color.BLUE
+  color: "#33aeff"
   lore:
   - '&7Thirst: &b-40'
   shop_cost: 50
+  thirst_value: 40
+  fatigue_value: 2
 COFFEE:
   name: "&6Coffe"
-  color: BLACK
+  color: "#441507"
   lore:
   - ''
   - '&7Thirst: &b-25'
   - '&7Fatigue: &c-25' 
   shop_cost: 200
+  thirst_value: 25
+  fatigue_value: 40
 MILK:
   name: '&fMilk'
-  color: WHITE
+  color: "#ffffff"
   lore:
   - ''
   - '&7Thirst: &b-60'   
   shop_cost: 110
+  thirst_value: 60
+  fatigue_value: 10
 WINE:
   name: '&5Wine'
-  color: PURPLE
+  color: "#690088"
   lore:
   - ''
   - '&7Thirst: &b-40'   
   shop_cost: 200
+  thirst_value: 40
+  fatigue_value: 0
 LEMONADE:
   name: '&aLemonade'
-  color: GREEN
+  color: "#b9f693"
   lore:
   - ''
   - '&7Thirst: &b-70'  
   shop_cost: 140
+  thirst_value: 70
+  fatigue_value: 5
 JUICE:
   name: '&cApple Juice'
-  color: YELLOW
+  color: "#ff7814"
   lore:
   - ''
   - '&7Thirst: &b-60'    
   shop_cost: 100
+  thirst_value: 60
+  fatigue_value: 15
 GODJUICE:
   name: '&eGod Juice'
-  color: RED
+  color: "#ff1448"
   lore:
   - ''
   - '&bQuench thirst'
   - '&cTake away the fatigue'
   - '&6Absorption!'  
   shop_cost: 1000
+  thirst_value: 200
+  fatigue_value: 250

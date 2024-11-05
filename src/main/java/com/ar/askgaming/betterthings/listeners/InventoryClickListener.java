@@ -21,18 +21,27 @@ public class InventoryClickListener implements Listener {
         Player p = (Player) e.getWhoClicked();
         if (e.getInventory().equals(plugin.getBarShop().getInv()) || e.getClickedInventory().equals(plugin.getBarShop().getInv())) {
             e.setCancelled(true);
+
             ItemStack item = e.getCurrentItem();
+            
             if (item == null || item.getType().equals(Material.AIR)) {
                 return;
             }
-            
-            int i = p.getInventory().firstEmpty();
-            if (i != -1) {
-                p.getInventory().setItem(i, item);
+
+            if (!plugin.getItems().isDrink(item)) {
                 return;
             }
-            p.getWorld().dropItem(p.getLocation(), item);
+            
+            ItemStack cloned = item.clone();
+            cloned.setAmount(1);
+            int cost = plugin.getItems().getCost(cloned);
 
+            if (plugin.getRealisticEconomy() !=null){
+                plugin.getBarShop().buyToServerBank(p, item, cost);
+            } else if (plugin.getVaultEconomy() != null) {
+                plugin.getBarShop().buyToVault(p, item, cost);
+
+            }
         }
     }
 }

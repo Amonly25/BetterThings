@@ -1,12 +1,5 @@
 package com.ar.askgaming.betterthings.Listeners;
 
-import java.util.jar.Attributes.Name;
-
-import javax.xml.stream.events.Namespace;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,17 +20,38 @@ public class ItemConsumeListener implements Listener {
     public void onConsume(PlayerItemConsumeEvent e) {
         Player p = e.getPlayer();
         ItemStack item = e.getItem();
-        if (item.getType().equals(Material.MILK_BUCKET)) {     								
-            plugin.getThirstManager().increase(p, 50);				
-        }
-        if (item.hasItemMeta() && item.getType().equals(Material.POTION)) {
-        			
-            PotionMeta pm = (PotionMeta) item.getItemMeta();
-            
-            if (pm.getBasePotionType() == PotionType.WATER) {
-                Bukkit.broadcastMessage("Is water");
-                plugin.getThirstManager().increase(p, 40);
-            }
+
+        switch (item.getType()) {
+            case MUSHROOM_STEW:
+                plugin.getThirstManager().increase(p, plugin.getFiles().getItemsConfig().getInt("default_items.MUSHROOM_STEW.thirst_value"));	
+                plugin.getFatigueManager().increase(p, plugin.getFiles().getItemsConfig().getInt("default_items.MUSHROOM_STEW.fatigue_value"));	
+                break;
+            case MILK_BUCKET:
+                plugin.getThirstManager().increase(p, plugin.getFiles().getItemsConfig().getInt("default_items.MILK_BUCKET.thirst_value"));	
+                plugin.getFatigueManager().increase(p, plugin.getFiles().getItemsConfig().getInt("default_items.MILK_BUCKET.fatigue_value"));	
+                break;
+  
+            case POTION:
+
+                if (item.hasItemMeta()) {
+                        
+                    PotionMeta pm = (PotionMeta) item.getItemMeta();
+                    
+                    if (pm.getBasePotionType() == PotionType.WATER) {
+        
+                        if (plugin.getItems().isDrink(item)){
+                            plugin.getThirstManager().increase(p, plugin.getItems().thirstValue(item));
+                            plugin.getFatigueManager().increase(p, plugin.getItems().fatigueValue(item));
+                        } else {
+                            // If not has the custom key, should be a simple water bottle
+                            plugin.getThirstManager().increase(p, plugin.getFiles().getItemsConfig().getInt("WATER.thirst_value"));
+                            plugin.getFatigueManager().increase(p, plugin.getFiles().getItemsConfig().getInt("WATER.fatigue_value"));
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
         }
     }
 }

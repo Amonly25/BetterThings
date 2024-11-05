@@ -1,6 +1,7 @@
 package com.ar.askgaming.betterthings.Managers;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -12,16 +13,19 @@ import com.ar.askgaming.betterthings.Events.IncreaseThirstEvent;
 
 public class ThirstManager extends BukkitRunnable{
 
-    private int increaseAmount = 4;
+    private int increaseAmount;
     private int maxThirst = 200;
+    private List<String> enabledWorlds;
 
     private BetterThings plugin;
 
     public ThirstManager(BetterThings betterThings) {
         plugin = betterThings;
 
+        increaseAmount = plugin.getConfig().getInt("thirst.increase");
+        enabledWorlds = plugin.getConfig().getStringList("thirst.enable_worlds");
         for (Player p : plugin.getServer().getOnlinePlayers()) {
-			add(p);
+            add(p);
 		}
     }
     
@@ -30,11 +34,16 @@ public class ThirstManager extends BukkitRunnable{
     public HashMap<Player, Integer> getMap() {
         return thirstMap;
     }
+    public boolean isInEnabledWorld(Player p) {
+       return enabledWorlds.contains(p.getWorld().getName());
+    }
 
     @Override
     public void run() {
         for (Player p : getMap().keySet()) {
-           decrease(p, increaseAmount);
+            if (isInEnabledWorld(p)) {
+                decrease(p, increaseAmount);
+            }
         } 
     }
 

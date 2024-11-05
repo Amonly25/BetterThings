@@ -1,6 +1,7 @@
 package com.ar.askgaming.betterthings.Managers;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -16,14 +17,20 @@ public class FatigueManager extends BukkitRunnable {
 
     private int increaseAmount = 4;
     private int maxFatigue = 250;
+    private List<String> enabledWorlds;
 
     private BetterThings plugin;
     public FatigueManager(BetterThings main) {
         plugin = main;
+        increaseAmount = plugin.getConfig().getInt("fatigue.increase");
+        enabledWorlds = plugin.getConfig().getStringList("fatigue.enable_worlds");
 
         for (Player p : plugin.getServer().getOnlinePlayers()) {
 			add(p);
 		}
+    }
+    public boolean isInEnabledWorld(Player p) {
+        return enabledWorlds.contains(p.getWorld().getName());
     }
 
     private HashMap<Player, Integer> fatigueMap = new HashMap<>();
@@ -35,7 +42,9 @@ public class FatigueManager extends BukkitRunnable {
     @Override
     public void run() {
         for (Player p : getMap().keySet()) {
-            decrease(p, increaseAmount);
+            if (isInEnabledWorld(p)) {
+                decrease(p, increaseAmount);
+            }
         }
     }
     public int getCurrent(Player p){
