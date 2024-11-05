@@ -1,48 +1,51 @@
-water:
+WATER:
   name: "&3Water"
+  color: Color.BLUE
   lore:
   - '&7Thirst: &b-40'
   shop_cost: 50
-coffe:
+COFFEE:
   name: "&6Coffe"
+  color: BLACK
   lore:
   - ''
   - '&7Thirst: &b-25'
   - '&7Fatigue: &c-25' 
   shop_cost: 200
-milk:
+MILK:
   name: '&fMilk'
+  color: WHITE
   lore:
   - ''
   - '&7Thirst: &b-60'   
   shop_cost: 110
-wine:
+WINE:
   name: '&5Wine'
+  color: PURPLE
   lore:
   - ''
   - '&7Thirst: &b-40'   
   shop_cost: 200
-lemonade:
+LEMONADE:
   name: '&aLemonade'
+  color: GREEN
   lore:
   - ''
   - '&7Thirst: &b-70'  
   shop_cost: 140
-juice:
+JUICE:
   name: '&cApple Juice'
+  color: YELLOW
   lore:
   - ''
   - '&7Thirst: &b-60'    
   shop_cost: 100
-godjuice:
+GODJUICE:
   name: '&eGod Juice'
+  color: RED
   lore:
   - ''
   - '&bQuench thirst'
   - '&cTake away the fatigue'
   - '&6Absorption!'  
   shop_cost: 1000
-lemon:
-  name: "&aLemon" 
-  chance_from_decay_drop: 0.05
-  block-lime-recipe: true

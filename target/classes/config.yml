@@ -1,13 +1,10 @@
  # Config File
  # BetterThings
  # By Ask Gaming(Amonly)
-message: #actionbar - #message
-  mode: actionbar 
-  thirst_change: "&bThirst &f: &7%thirst_amount% &b||| &f/ &cFatigue &f: &7%fatigue_amount% &c|||"
-  fatigue_change: "&cFatigue &f: &7%fatigue_amount% &c||| &f/ &bThirst &f: &7%thirst_amount% &b|||"
 thirst: # Max 200
-  task: 1200 # How often the plugin will check your thirst and increase it 
-  howmuch: 4 # How much thirst will be increased in the task time
+  enable: true
+  emoji: 🍶
+  howmuch: 4 # How much thirst will be decreased per minute
   enableworlds:
   - world
   - world_nether
@@ -18,8 +15,9 @@ thirst: # Max 200
   150:
     msg: '&bIm dying of thirst'  
 fatigue: # Max 250
-  task: 1200 # How often the plugin will check your fatigue and increase it 
-  howmuch: 2 # How much fatigue will be increased in the task time
+  enable: true
+  emoji: 🛌
+  howmuch: 2 # How much fatigue will be decreased per minute
   enableworlds:
   - world
   - world_the_end
@@ -29,11 +27,10 @@ fatigue: # Max 250
     msg: '&cI am very sleepy.. but I can continue!'
   200:
     msg: '&cI am very tired, I should sleep..'  
-players_can_toggle: false #If true, thirst and fatigue for players are disable by default, the should toggle it individually
+constant_action_bar: true
 sleepfeature:
   enable: true
 enablerecipes: true  
-# This materials will be bypassed to place when you are too tired
 materials:
 - WHITE_BED
 - RED_BED

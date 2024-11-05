@@ -1,6 +1,7 @@
 package com.ar.askgaming.betterthings.Managers;
 
 import java.io.File;
+import java.util.logging.Level;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -8,33 +9,43 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.ar.askgaming.betterthings.BetterThings;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class FilesManager extends BukkitRunnable{
     
     private BetterThings plugin;
 
-    private File playerData;
-    private FileConfiguration playerDataConfig;
-
-    public FileConfiguration getPlayerDataConfig() {
-        return playerDataConfig;
-    }
+    private File playerData, langFile, itemsFile;
+    private FileConfiguration playerDataConfig, langConfig, itemsConfig;
 
     public FilesManager(BetterThings main) {
         plugin = main;
 
-        playerData = new File(plugin.getDataFolder(), "playerData.yml");
-        if (!playerData.exists()) {
-            plugin.saveResource("playerData.yml", false);
-        }
-        playerDataConfig = new YamlConfiguration();
+        playerData = createFile("playerdata.yml");
+        itemsFile = createFile("drinks.yml");
+        langFile = createFile("lang.yml");
 
-        try {
-            playerDataConfig.load(playerData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        playerDataConfig = loadConfiguration(playerData);
+        itemsConfig = loadConfiguration(itemsFile);
+        langConfig = loadConfiguration(langFile);
     }
-    public void save(){
+
+    private File createFile(String fileName) {
+        
+        plugin.saveResource(fileName, false);
+        return new File(plugin.getDataFolder(), fileName);
+    }
+
+    private FileConfiguration loadConfiguration(File file) {
+        FileConfiguration config = new YamlConfiguration();
+        try {
+            config.load(file);
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "Could not load configuration from file: " + file.getName(), e);
+        }
+        return config;
+    }
+    public void savePlayerData(){
         try {
             playerDataConfig.save(playerData);
         } catch (Exception e) {
@@ -42,8 +53,19 @@ public class FilesManager extends BukkitRunnable{
         }
     }
 
+    public String getLang(String path){
+        return ChatColor.translateAlternateColorCodes('&', langConfig.getString(path,"Unknown"));
+    }
+    public FileConfiguration getItemsConfig() {
+        return itemsConfig;
+    }
+
+    public FileConfiguration getPlayerDataConfig() {
+        return playerDataConfig;
+    }
+
     @Override
     public void run() {
-        save();
+        savePlayerData();
     }
 }

@@ -2,11 +2,15 @@ package com.ar.askgaming.betterthings.Managers;
 
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.ar.askgaming.betterthings.BetterThings;
+import com.ar.askgaming.betterthings.Events.IncreaseFatigueEvent;
+
+import net.md_5.bungee.api.ChatColor;
 
 public class FatigueManager extends BukkitRunnable {
 
@@ -18,7 +22,6 @@ public class FatigueManager extends BukkitRunnable {
         plugin = main;
 
         for (Player p : plugin.getServer().getOnlinePlayers()) {
-
 			add(p);
 		}
     }
@@ -32,22 +35,29 @@ public class FatigueManager extends BukkitRunnable {
     @Override
     public void run() {
         for (Player p : getMap().keySet()) {
-            increase(p, increaseAmount);
+            decrease(p, increaseAmount);
         }
     }
     public int getCurrent(Player p){
-        return getMap().get(p);
+        if (getMap().containsKey(p)) {
+            return getMap().get(p);
+        } else return maxFatigue;
     }
 
     public void setFatigue(Player p, int amount){
+
         getMap().put(p, amount);
+
+        IncreaseFatigueEvent e = new IncreaseFatigueEvent(p, amount, plugin.getActionBar().getEmojiMessage(p));
+        Bukkit.getPluginManager().callEvent(e);
+
         FileConfiguration data = plugin.getFiles().getPlayerDataConfig();
         data.set(p.getName()+".fatigue.amount", amount);
     }
 
     public void increase(Player p, int amount){
         if (getCurrent(p) >= maxFatigue) {
-            return;
+            setFatigue(p, getCurrent(p));
         }
 
         if (getCurrent(p) + amount > maxFatigue) {
@@ -57,7 +67,31 @@ public class FatigueManager extends BukkitRunnable {
             setFatigue(p, getCurrent(p) + amount);
         }
     }
+    public void decrease(Player p, int amount){
+        if (getCurrent(p) == 0) {
+            setFatigue(p, getCurrent(p));
+        }
+        if (getCurrent(p) - amount < 0) {
+            setFatigue(p, 0);
+        } else {
+            setFatigue(p, getCurrent(p) - amount);
+        }
+    }
     
+    public void toggle(Player p){
+        FileConfiguration data = plugin.getFiles().getPlayerDataConfig();
+        String name = p.getName();
+        p.sendMessage(plugin.getFiles().getLang("fatigue.toggle").replace("%state%", String.valueOf(!hasEnabled(p))));
+
+        if (hasEnabled(p)) {
+            data.set(name+".fatigue.enabled", false);
+            getMap().remove(p);
+        } else {
+            add(p);
+            data.set(name+".fatigue.enabled", true);
+        }
+    }
+
     public boolean hasEnabled(Player p){
         FileConfiguration data = plugin.getFiles().getPlayerDataConfig();
         String name = p.getName();
@@ -71,5 +105,15 @@ public class FatigueManager extends BukkitRunnable {
             int i = plugin.getFiles().getPlayerDataConfig().getInt(p.getName()+".fatigue.amount",0);
             getMap().put(p, i);
         }
+    }
+    public String getMessage(Player p) {
+        String str = plugin.getConfig().getString("message.fatigue_change").replace("%fatigue_amount%", String.valueOf(getCurrent(p)))
+				.replace("%thirst_amount%", String.valueOf(plugin.getThirstManager().getCurrent(p)));
+
+        return ChatColor.translateAlternateColorCodes('&', str);
+    }
+
+    public String getPercent(Player p) {
+        return String.valueOf((int) Math.round((double) getCurrent(p) / maxFatigue * 100));
     }
 }

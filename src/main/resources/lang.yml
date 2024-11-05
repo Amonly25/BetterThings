@@ -1,3 +1,13 @@
+thirst:
+  toggle: "Thirst has been turned %state% for you."
+  on_cmd: "Thirst: %amount%/200 - %percent%%."
+  disabled: "Thirst is disabled for you."
+
+fatigue:
+  toggle: "Fatigue has been turned %state% for you."
+  on_cmd: "Fatigue: %amount%/250 - %percent%%."
+  disabled: "Fatigue is disabled for you."
+
 tootired: '&cI am too tired to do that, I should sleep first.'
 tiredtorun: '&cI am too tired to run..'
 regenthirst: '&cYou will not regenerate life with such thirst'
