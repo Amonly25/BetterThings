@@ -19,6 +19,10 @@ public class ActionBarTask extends BukkitRunnable{
     private HashMap<Player, String> emojiMap = new HashMap<>();
     private boolean constantActionBar;
 
+    public boolean isConstantActionBar() {
+        return constantActionBar;
+    }
+
     public ActionBarTask(BetterThings main) {
         plugin = main;
 
@@ -31,11 +35,7 @@ public class ActionBarTask extends BukkitRunnable{
             setEmojiMessage(p);
             if (constantActionBar){
                 if (plugin.getThirstManager().hasEnabled(p) || plugin.getFatigueManager().hasEnabled(p)){
-                    
-                    String message = getEmojiMessage(p);
-                    if (!message.isEmpty()) {
-                        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacy(message));
-                    }
+                    sendMessage(p);
                 }
             }
         }
@@ -74,5 +74,8 @@ public class ActionBarTask extends BukkitRunnable{
     }
     public String getEmojiMessage(Player p) {
         return emojiMap.getOrDefault(p, "");
+    }
+    public void sendMessage(Player p) {
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacy(getEmojiMessage(p)));
     }
 }

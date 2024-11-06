@@ -19,9 +19,13 @@ public class InventoryClickListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
-        if (e.getInventory().equals(plugin.getBarShop().getInv()) || e.getClickedInventory().equals(plugin.getBarShop().getInv())) {
+        if (e.getInventory().equals(plugin.getBarShop().getInv())) {
             e.setCancelled(true);
 
+            if (!e.getClickedInventory().equals(plugin.getBarShop().getInv())) {
+                return;
+            }
+                    
             ItemStack item = e.getCurrentItem();
             
             if (item == null || item.getType().equals(Material.AIR)) {

@@ -58,7 +58,7 @@ public class Commands implements TabExecutor {
 		ThirstManager t = plugin.getThirstManager();
 
 		if (args.length == 0) {
-
+			p.setSleepingIgnored(true);
 			if (t.hasEnabled(p)){
 				p.sendMessage(plugin.getFiles().getLang("thirst.on_cmd")
 				.replace("%amount%", String.valueOf(t.getCurrent(p)))
@@ -111,16 +111,16 @@ public class Commands implements TabExecutor {
 			}
 			switch (args[1]) {
 				case "max_thirst":
-					plugin.getThirstManager().setThirst(target, 200);
+					plugin.getThirstManager().setAttribute(target, 200);
 					break;
 				case "max_fatigue":
-					plugin.getFatigueManager().setFatigue(target, 2050);
+					plugin.getFatigueManager().setAttribute(target, 2050);
 					break;		
 				case "min_thirst":
-					plugin.getThirstManager().setThirst(target, 0);
+					plugin.getThirstManager().setAttribute(target, 0);
 					break;
 				case "min_fatigue":
-					plugin.getFatigueManager().setFatigue(target, 0);
+					plugin.getFatigueManager().setAttribute(target, 0);
 					break;		
 				default:
 					p.sendMessage("Invalid argument");

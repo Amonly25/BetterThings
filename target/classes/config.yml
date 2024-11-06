@@ -6,8 +6,11 @@ constant_action_bar: true
 thirst: # Max 200
   enable: true
   emoji: 🍶
-  increase: 4 # How much thirst will be decreased per minute
+  decrease: 4 # How much thirst will be decreased per minute
   amount_on_fire_blocks: true
+  hurt_when_0: true
+  deny_actions:
+    nausea_on_place_blocks_below: 50
   deny_actions:
     
   enable_worlds:
@@ -17,30 +20,16 @@ thirst: # Max 200
 fatigue: # Max 250
   enable: true
   emoji: 🛌
-  increase: 2 # How much fatigue will be decreased per minute
+  decrease: 2 # How much fatigue will be decreased per minute
+  rest_inday_increase: 50
+  force_sleep_in_day: true
+  hunger_after_sleep: true
+  hurt_when_0: true
   deny_actions:
-    regain_health_below : 50
+    regain_health_below: 25
+    cancel_sprint_below: 50
+    minig_fatigue_below: 70
   enable_worlds:
   - world
   - world_the_end
 
-sleep_feature:
-  enable: true
-
-materials:
-- WHITE_BED
-- RED_BED
-- ORANGE_BED
-- BLACK_BED
-- MAGENTA_BED
-- LIGHT_BLUE_BED
-- BLUE_BED
-- YELLOW_BED
-- GREEN_BED
-- PINK_BED
-- GRAY_BED
-- LIGHT_GRAY_BED
-- CYAN_BED
-- PURPLE_BED
-- BROWN_BED
-- LIME_BED

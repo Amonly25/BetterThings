@@ -46,9 +46,6 @@ public class BetterThings extends JavaPlugin{
 		
 		loadManagers();
 
-		ActionBarTask actionBar = new ActionBarTask(this);
-		actionBar.runTaskTimer(this, 0, 20);
-
 		items = new Items(this);
 		barShop = new BarShop(this);
 
@@ -95,7 +92,7 @@ public class BetterThings extends JavaPlugin{
 			actionBar.cancel();
 		}
 		actionBar = new ActionBarTask(this);
-		actionBar.runTaskTimer(this, 60, 20);
+		actionBar.runTaskTimer(this, 60, 40);
 
 		if (fManager != null) {
 			fManager.cancel();
@@ -110,7 +107,7 @@ public class BetterThings extends JavaPlugin{
 		}
 		if (getConfig().getBoolean("thirst.enable",true)){
 			tManager = new ThirstManager(this);
-			tManager.runTaskTimer(this, 0, 1200);
+			tManager.runTaskTimer(this, 600, 1200);
 		} else getLogger().log(Level.INFO, "Thirst feature disabled.");
 	}
 	public void onDisable(){

@@ -2,9 +2,13 @@ thirst:
   toggle: "&7Thirst has been turned &6%state% &7for you."
   on_cmd: "&7Thirst: &b%amount%/200 - %percent%%."
   disabled: "&7Thirst is disabled for you."
+  low: "&bYou are feeling thirsty, you should drink something."
+  very_low: "&bYou are feeling very thirsty, you should drink something."
 
 fatigue:
   toggle: "&7Fatigue has been turned &6%state% &7for you."
   on_cmd: "&7Fatigue: &c%amount%/250 - %percent%%."
   disabled: "&7Fatigue is disabled for you."
+  low: "&cYou are feeling tired, you should rest."
+  very_low: "&cYou are feeling very tired, you should rest."
 

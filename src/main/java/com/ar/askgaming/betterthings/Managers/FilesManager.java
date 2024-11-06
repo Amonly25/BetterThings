@@ -31,9 +31,11 @@ public class FilesManager extends BukkitRunnable{
     }
 
     private File createFile(String fileName) {
-        
-        plugin.saveResource(fileName, false);
-        return new File(plugin.getDataFolder(), fileName);
+        File file = new File(plugin.getDataFolder(), fileName);
+        if (!file.exists()){
+            plugin.saveResource(fileName, false);
+        }
+        return file;
     }
 
     private FileConfiguration loadConfiguration(File file) {

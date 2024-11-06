@@ -6,6 +6,7 @@ import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -46,8 +47,13 @@ public class Items {
         String name = cfg.getString(drinkType.toString()+".name","Unknown");
         Color color = getColorFromConfig(drinkType.toString()+".color");
 
-        lore.forEach(s -> s = ChatColor.translateAlternateColorCodes('&', s));
+        for (int i = 0; i < lore.size(); i++) {
+            String s = lore.get(i);
+            s = ChatColor.translateAlternateColorCodes('&', s);
+            lore.set(i, s);
+        }
 
+        meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
         meta.setLore(lore);
         meta.setColor(color);

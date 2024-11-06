@@ -23,19 +23,21 @@ public class IncreaseFatigueEvent extends Event{
         this.player = player;
         this.fatigue = fatigue;
 
-        new BukkitRunnable() {
-            int count = 0;
-
-            @Override
-            public void run() {
-                if (count >= 5) {
-                    cancel();
-                    return;
+        if (!plugin.getActionBar().isConstantActionBar()){
+            new BukkitRunnable() {
+                int count = 0;
+    
+                @Override
+                public void run() {
+                    if (count >= 5) {
+                        cancel();
+                        return;
+                    }
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacy(message));
+                    count++;
                 }
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacy(message));
-                count++;
-            }
-        }.runTaskTimer(plugin, 0L, 20L);
+            }.runTaskTimer(plugin, 0L, 20L);
+        }
     }
 
     public String getMessage() {

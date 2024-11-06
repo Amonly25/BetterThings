@@ -53,7 +53,7 @@ public class BarShop {
             EconomyResponse response = plugin.getVaultEconomy().withdrawPlayer(p, amount);
             if (response.transactionSuccess()) {
         
-                p.sendMessage("§aHas comprado con éxito " + amount + " items por " + amount);  
+                p.sendMessage("§aHas comprado con éxito " + item.getItemMeta().getDisplayName() + " items por " + amount);  
                 p.getInventory().addItem(item);
                 return response;
             }

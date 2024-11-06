@@ -16,8 +16,8 @@ public class PlayerDeathListener implements Listener{
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
-        plugin.getThirstManager().setThirst(p, 200);
-        plugin.getFatigueManager().setFatigue(p, 250);
+        plugin.getThirstManager().setAttribute(p, 200);
+        plugin.getFatigueManager().setAttribute(p, 250);
     }
     
 }
