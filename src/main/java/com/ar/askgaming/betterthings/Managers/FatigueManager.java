@@ -16,11 +16,11 @@ public class FatigueManager extends AttributeManager {
     @Override
     protected void handleLowAttribute(Player p) {
         int newFatigue = getCurrent(p);
-        Bukkit.broadcastMessage("test" + getConfigKey());
+
         if (newFatigue == 0) {
-            if (plugin.getConfig().getBoolean("fatigue.hurt_when_0", true)) {
-                p.damage(0.5);
-            }
+            double amount = plugin.getConfig().getDouble("fatigue.damage_when_0", 1);
+            p.damage(amount);
+            
         }
 
         if (newFatigue < maxAttribute * 0.25) {

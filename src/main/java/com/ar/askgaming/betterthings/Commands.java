@@ -34,7 +34,10 @@ public class Commands implements TabExecutor {
 					List<String> list = new ArrayList<>();
 					for (Items.DrinkType drink : Items.DrinkType.values()) {
                         list.add(drink.toString().toLowerCase());
+
                     }
+					list.add("lemon");
+					return list;
 				}
 				return List.of("set", "reload","get_item");
 		}
@@ -121,6 +124,8 @@ public class Commands implements TabExecutor {
 			if (plugin.getItems().getFromString(itemType) != null) {
 				p.getInventory().addItem(plugin.getItems().getFromString(itemType));
 				return;
+			} else if (itemType.equals("lemon")){
+				p.getInventory().addItem(plugin.getItems().getlemon());
 			}
 		}
 
@@ -147,6 +152,7 @@ public class Commands implements TabExecutor {
 					p.sendMessage("Invalid argument");
 					break;
 			}
+			return;
 		}
 		p.sendMessage("Invalid argument");
 		

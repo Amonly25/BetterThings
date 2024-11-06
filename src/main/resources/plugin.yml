@@ -17,5 +17,6 @@ commands:
     description: Show your fatigue.
     permission: betterthings.fatigue
   betterthings:
+    aliases: [bt]
     description: Help Menu.
     permission: betterthings.admin

@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.ar.askgaming.betterthings.Drinks.BarShop;
 import com.ar.askgaming.betterthings.Drinks.Items;
 import com.ar.askgaming.betterthings.Drinks.Recipes;
+import com.ar.askgaming.betterthings.Integrations.PlaceHolders;
 import com.ar.askgaming.betterthings.Listeners.DecayListener;
 import com.ar.askgaming.betterthings.Listeners.InventoryClickListener;
 import com.ar.askgaming.betterthings.Listeners.ItemConsumeListener;
@@ -73,6 +74,11 @@ public class BetterThings extends JavaPlugin{
 			getLogger().info("RealisticEconomy found!");
             realisticEconomy = (RealisticEconomy) getServer().getPluginManager().getPlugin("RealisticEconomy");
         }
+
+		if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+			new PlaceHolders(this).register();
+
+		}
 
 	}
 	public void onDisable(){

@@ -17,9 +17,8 @@ public class ThirstManager extends AttributeManager{
         int newThirst = getCurrent(p);
 
         if (newThirst == 0) {
-            if (plugin.getConfig().getBoolean("thirst.hurt_when_0", true)) {
-                p.damage(0.5);
-            }
+            double amount = plugin.getConfig().getDouble("thirst.damage_when_0", 1);
+            p.damage(amount);
         }
 
         if (newThirst < maxAttribute * 0.25) {

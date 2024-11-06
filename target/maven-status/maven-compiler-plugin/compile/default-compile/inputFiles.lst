@@ -9,6 +9,7 @@ C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\bet
 C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\betterthings\Managers\FatigueManager.java
 C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\betterthings\Listeners\InventoryClickListener.java
 C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\betterthings\Listeners\PlayerDeathListener.java
+C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\betterthings\Listeners\PrepareItemCraftListener.java
 C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\betterthings\Listeners\RegainHealthListener.java
 C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\betterthings\Managers\AttributeManager.java
 C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\betterthings\BetterThings.java
@@ -18,4 +19,6 @@ C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\bet
 C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\betterthings\Managers\FilesManager.java
 C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\betterthings\Listeners\PlayerBedListeners.java
 C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\betterthings\Events\IncreaseThirstEvent.java
+C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\betterthings\Listeners\DecayListener.java
+C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\betterthings\Drinks\Recipes.java
 C:\Users\Luisito\Desktop\vs_code\BetterThings\src\main\java\com\ar\askgaming\betterthings\Commands.java

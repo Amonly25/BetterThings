@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -42,14 +43,16 @@ public abstract class AttributeManager extends BukkitRunnable{
     @Override
     public void run() {
         for (Player p : getMap().keySet()) {
-            if (lastBlockStanding.containsKey(p)){
-                if (lastBlockStanding.get(p).equals(PlayerMoveListener.lastBlockStanding.get(p))) {
-                    return;
-                }
-            }
-            lastBlockStanding.put(p, p.getLocation().getBlock());
 
-            if (isInEnabledWorld(p)) {
+            if (isInEnabledWorld(p) && hasEnabled(p)) {
+
+                if (lastBlockStanding.containsKey(p)){
+                    if (lastBlockStanding.get(p).equals(PlayerMoveListener.lastBlockStanding.get(p))) {
+                        return;
+                    }
+                }
+                lastBlockStanding.put(p, p.getLocation().getBlock());
+
                 decrease(p, decreaseAmount);
                 handleLowAttribute(p);
             }
@@ -63,7 +66,7 @@ public abstract class AttributeManager extends BukkitRunnable{
     public void setAttribute(Player p, int amount) {
         attributeMap.put(p, amount);
         FileConfiguration data = plugin.getFiles().getPlayerDataConfig();
-        data.set(p.getName() + getConfigKey() + ".amount", amount);
+        data.set(p.getName()+"." + getConfigKey() + ".amount", amount);
         plugin.getActionBar().sendMessage(p);
     }
 
@@ -83,14 +86,13 @@ public abstract class AttributeManager extends BukkitRunnable{
         p.sendMessage(plugin.getFiles().getLang(getConfigKey() + ".toggle").replace("%state%", String.valueOf(!hasEnabled(p))));
         data.set(name + "." + getConfigKey() + ".enabled", !hasEnabled(p));
 
-        if (hasEnabled(p)) {
-            attributeMap.remove(p);
-        } else {
-            add(p);
-        }
     }
 
     public boolean hasEnabled(Player p) {
+        if (p.getGameMode() != GameMode.SURVIVAL) {
+            return false;
+
+        }
         FileConfiguration data = plugin.getFiles().getPlayerDataConfig();
         String name = p.getName();
         return data.getBoolean(name + "." + getConfigKey() + ".enabled", true);

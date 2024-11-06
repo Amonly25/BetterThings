@@ -1,4 +1,5 @@
 com\ar\askgaming\betterthings\Events\IncreaseThirstEvent.class
+com\ar\askgaming\betterthings\Listeners\DecayListener.class
 com\ar\askgaming\betterthings\Listeners\PlaceBreakBlockListener.class
 com\ar\askgaming\betterthings\BetterThings.class
 com\ar\askgaming\betterthings\Drinks\BarShop.class
@@ -8,11 +9,12 @@ com\ar\askgaming\betterthings\Listeners\RegainHealthListener.class
 com\ar\askgaming\betterthings\Managers\ThirstManager.class
 com\ar\askgaming\betterthings\Listeners\PlayerMoveListener$1.class
 com\ar\askgaming\betterthings\Managers\ActionBarTask.class
+com\ar\askgaming\betterthings\Drinks\Recipes.class
 com\ar\askgaming\betterthings\Managers\FilesManager.class
+com\ar\askgaming\betterthings\Listeners\PrepareItemCraftListener.class
 com\ar\askgaming\betterthings\Events\IncreaseThirstEvent$1.class
 com\ar\askgaming\betterthings\Listeners\PlayerBedListeners.class
 com\ar\askgaming\betterthings\Commands.class
-com\ar\askgaming\betterthings\Listeners\RegainHealthListener$1.class
 com\ar\askgaming\betterthings\Listeners\PlaceBreakBlockListener$2.class
 com\ar\askgaming\betterthings\Listeners\ItemConsumeListener$1.class
 com\ar\askgaming\betterthings\Events\IncreaseFatigueEvent$1.class

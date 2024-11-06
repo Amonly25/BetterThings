@@ -20,7 +20,7 @@ public class DecayListener implements Listener {
 		Block b = e.getBlock();
 		double randDoublet = Math.random();
 		
-		if (randDoublet <= plugin.getConfig().getDouble("chance_decay_drop")) {	
+		if (randDoublet <= plugin.getConfig().getDouble("others.chance_decay_drop",0.3)) {	
 			if (b.getType() == Material.BIRCH_LEAVES) {
 		        b.getWorld().dropItemNaturally(b.getLocation(), plugin.getItems().getlemon());
 		    }

@@ -3,14 +3,14 @@
 
 #Thirst max: 200 - Fatigue max: 250 - The decrease task is per minute
 #If you disble constant_action_bar, the plugin will send a message every time the player changues the value of thirst or fatigue
-
+#Decay percentage of the lemon item, 0.1 = 10% of decay - #Apple has 0.05 of decay
 constant_action_bar: true
 
 thirst: 
   emoji: 🍶
   decrease: 4 
   amount_on_fire_blocks: true
-  hurt_when_0: true
+  damage_when_0: 1
   deny_actions:
     regain_health_below: 25
     nausea_on_place_blocks_below: 50
@@ -26,7 +26,7 @@ fatigue:
   rest_inday_increase: 50
   force_sleep_in_day: true
   hunger_after_sleep: true
-  hurt_when_0: true
+  damage_when_0: 1
   deny_actions:
     regain_health_below: 25
     cancel_sprint_below: 50
@@ -38,3 +38,4 @@ fatigue:
 others:
   enable_recipes: true
   lemon_item_name: "&aLemon"
+  chance_decay_drop: 0.1
