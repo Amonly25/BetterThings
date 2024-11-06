@@ -1,5 +1,6 @@
 package com.ar.askgaming.betterthings.Drinks;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.bukkit.Color;
@@ -8,6 +9,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
@@ -22,6 +24,9 @@ public class Items {
 
     private NamespacedKey key;
 
+    public NamespacedKey getKey() {
+        return key;
+    }
     private BetterThings plugin;
     public Items(BetterThings main) {
         plugin = main;
@@ -116,5 +121,23 @@ public class Items {
         }
         return false;
     }
+    public ItemStack getlemon() {
+        ItemStack lemon = new ItemStack(Material.LIME_DYE);
+        ItemMeta meta = lemon.getItemMeta();
+        String name = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("others.lemon_item_name", "Lemon"));
+        meta.setDisplayName(name);
+        meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "lemon");
+        lemon.setItemMeta(meta);
 
+        return lemon;
+    }
+    public ItemStack getFromString(String s) {
+        try {
+            DrinkType type = DrinkType.valueOf(s.toUpperCase());
+            return getDrink(type);
+        } catch (IllegalArgumentException e) {
+            plugin.getLogger().info("Invalid drink type: " + s);
+            return null;
+        }
+    }
 }

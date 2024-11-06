@@ -28,7 +28,7 @@ public class PlayerBedListeners implements Listener{
         if (f.hasEnabled(p) && f.isInEnabledWorld(p)) {
             if (plugin.getConfig().getBoolean("fatigue.hunger_after_sleep", true)) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 200, 1));
-                p.sendMessage("Mh que hambre, a desayunar!");
+                p.sendMessage(plugin.getFiles().getLang("fatigue.leave_bed"));
 
             }
             f.setAttribute(p, 250);

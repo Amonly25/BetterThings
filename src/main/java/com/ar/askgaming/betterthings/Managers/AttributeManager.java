@@ -109,5 +109,5 @@ public abstract class AttributeManager extends BukkitRunnable{
 
     protected abstract void handleLowAttribute(Player p);
 
-    protected abstract String getConfigKey();
+    public abstract String getConfigKey();
 }

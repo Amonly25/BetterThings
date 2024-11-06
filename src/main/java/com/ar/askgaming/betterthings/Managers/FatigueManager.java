@@ -33,7 +33,7 @@ public class FatigueManager extends AttributeManager {
     }
 
     @Override
-    protected String getConfigKey() {
+    public String getConfigKey() {
         return "fatigue";
     }
 }

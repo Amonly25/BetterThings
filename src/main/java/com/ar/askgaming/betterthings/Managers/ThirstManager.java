@@ -32,7 +32,7 @@ public class ThirstManager extends AttributeManager{
     }
 
     @Override
-    protected String getConfigKey() {
+    public String getConfigKey() {
         return "thirst";
     }
 

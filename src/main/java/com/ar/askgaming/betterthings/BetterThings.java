@@ -3,11 +3,14 @@ package com.ar.askgaming.betterthings;
 import java.util.logging.Level;
 
 import org.bukkit.event.player.PlayerBedEnterEvent;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ar.askgaming.betterthings.Drinks.BarShop;
 import com.ar.askgaming.betterthings.Drinks.Items;
+import com.ar.askgaming.betterthings.Drinks.Recipes;
+import com.ar.askgaming.betterthings.Listeners.DecayListener;
 import com.ar.askgaming.betterthings.Listeners.InventoryClickListener;
 import com.ar.askgaming.betterthings.Listeners.ItemConsumeListener;
 import com.ar.askgaming.betterthings.Listeners.PlaceBreakBlockListener;
@@ -16,6 +19,7 @@ import com.ar.askgaming.betterthings.Listeners.PlayerDeathListener;
 import com.ar.askgaming.betterthings.Listeners.PlayerJoinListener;
 import com.ar.askgaming.betterthings.Listeners.PlayerMoveListener;
 import com.ar.askgaming.betterthings.Listeners.PlayerQuitListener;
+import com.ar.askgaming.betterthings.Listeners.PrepareItemCraftListener;
 import com.ar.askgaming.betterthings.Listeners.RegainHealthListener;
 import com.ar.askgaming.betterthings.Managers.ActionBarTask;
 import com.ar.askgaming.betterthings.Managers.FatigueManager;
@@ -35,6 +39,7 @@ public class BetterThings extends JavaPlugin{
 	private ActionBarTask actionBar;
 	private Items items;
 	private BarShop barShop;
+	private Recipes recipes;
 
 	//Hooks
 	private Economy vaultEconomy;
@@ -48,16 +53,9 @@ public class BetterThings extends JavaPlugin{
 
 		items = new Items(this);
 		barShop = new BarShop(this);
-
-		getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
-		getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
-		getServer().getPluginManager().registerEvents(new ItemConsumeListener(this), this);
-		getServer().getPluginManager().registerEvents(new InventoryClickListener(this), this);
-		getServer().getPluginManager().registerEvents(new PlayerDeathListener(this), this);
-		getServer().getPluginManager().registerEvents(new PlayerMoveListener(this), this);
-		getServer().getPluginManager().registerEvents(new RegainHealthListener(this), this);
-		getServer().getPluginManager().registerEvents(new PlaceBreakBlockListener(this), this);
-		getServer().getPluginManager().registerEvents(new PlayerBedListeners(this), this);
+		recipes = new Recipes(this);
+		
+		registerListeners();
 
 		getServer().getPluginCommand("thirst").setExecutor(new Commands(this));
 		getServer().getPluginCommand("fatigue").setExecutor(new Commands(this));
@@ -68,12 +66,8 @@ public class BetterThings extends JavaPlugin{
             RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
             if (rsp == null) {
                 getLogger().info("Non economy plugin found!, shop feature disabled.");
-            } else {
-                vaultEconomy = rsp.getProvider();
-            }
-
-        } else getLogger().info("Vault not found!");
-
+            } else vaultEconomy = rsp.getProvider();           
+        } 
 
         if (getServer().getPluginManager().isPluginEnabled("RealisticEconomy")) {
 			getLogger().info("RealisticEconomy found!");
@@ -81,6 +75,10 @@ public class BetterThings extends JavaPlugin{
         }
 
 	}
+	public void onDisable(){
+		files.savePlayerData();
+	}
+
 	public void loadManagers(){
 		if (files  != null) {
 			files.cancel();
@@ -97,22 +95,31 @@ public class BetterThings extends JavaPlugin{
 		if (fManager != null) {
 			fManager.cancel();
 		}
-		if (getConfig().getBoolean("fatigue.enable",true)){
-			fManager = new FatigueManager(this);
-			fManager.runTaskTimer(this, 0, 1200);
-		} else getLogger().log(Level.INFO, "Fatigue feature disabled.");
+		fManager = new FatigueManager(this);
+		fManager.runTaskTimer(this, 0, 1200);
 
 		if (tManager != null) {
 			tManager.cancel();
 		}
-		if (getConfig().getBoolean("thirst.enable",true)){
-			tManager = new ThirstManager(this);
-			tManager.runTaskTimer(this, 600, 1200);
-		} else getLogger().log(Level.INFO, "Thirst feature disabled.");
+		tManager = new ThirstManager(this);
+		tManager.runTaskTimer(this, 600, 1200);
 	}
-	public void onDisable(){
-		files.savePlayerData();
+
+	private void registerListeners(){
+
+		getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+		getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
+		getServer().getPluginManager().registerEvents(new ItemConsumeListener(this), this);
+		getServer().getPluginManager().registerEvents(new InventoryClickListener(this), this);
+		getServer().getPluginManager().registerEvents(new PlayerDeathListener(this), this);
+		getServer().getPluginManager().registerEvents(new PlayerMoveListener(this), this);
+		getServer().getPluginManager().registerEvents(new RegainHealthListener(this), this);
+		getServer().getPluginManager().registerEvents(new PlaceBreakBlockListener(this), this);
+		getServer().getPluginManager().registerEvents(new PlayerBedListeners(this), this);
+		getServer().getPluginManager().registerEvents(new PrepareItemCraftListener(this), this);
+		getServer().getPluginManager().registerEvents(new DecayListener(this), this);
 	}
+	
 	public ThirstManager getThirstManager() {
 		return tManager;
 	}
@@ -136,6 +143,9 @@ public class BetterThings extends JavaPlugin{
 	}
 	public RealisticEconomy getRealisticEconomy() {
 		return realisticEconomy;
+	}
+	public Recipes getRecipes() {
+		return recipes;
 	}
 }
 

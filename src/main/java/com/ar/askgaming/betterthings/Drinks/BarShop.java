@@ -23,7 +23,7 @@ public class BarShop {
     public BarShop(BetterThings main) {
         plugin = main;
 
-        inv = Bukkit.createInventory(null, 18,"Bar Shop");
+        inv = Bukkit.createInventory(null, 18,plugin.getFiles().getLang("bar_shop.title"));
         initializeItems();
 
     }
@@ -45,15 +45,14 @@ public class BarShop {
         if (response.transactionSuccess()) {
             plugin.getRealisticEconomy().getServerBank().deposit(amount);
         } else {
-            plugin.getLogger().warning("No se pudo depositar el dinero en el banco del servidor.");
+            plugin.getLogger().warning("Error: The server bank could not deposit the money");
         }
     }
     public EconomyResponse buyToVault(Player p, ItemStack item, double amount) {
         if (canBuy(p, item, amount)) {
             EconomyResponse response = plugin.getVaultEconomy().withdrawPlayer(p, amount);
             if (response.transactionSuccess()) {
-        
-                p.sendMessage("§aHas comprado con éxito " + item.getItemMeta().getDisplayName() + " items por " + amount);  
+                p.sendMessage(plugin.getFiles().getLang("bar_shop.buy").replace("%item%", item.getItemMeta().getDisplayName()).replace("%cost%", String.valueOf(amount)));
                 p.getInventory().addItem(item);
                 return response;
             }
@@ -64,11 +63,11 @@ public class BarShop {
     public boolean canBuy(Player buyer, ItemStack item, double amount) {
      
         if (plugin.getVaultEconomy().getBalance(buyer) < amount) {
-            buyer.sendMessage("§cNo tienes suficiente dinero");
+            buyer.sendMessage(plugin.getFiles().getLang("bar_shop.no_money"));
             return false;
         }
         if (buyer.getInventory().firstEmpty() == -1) {
-            buyer.sendMessage("No tienes espacio");
+            buyer.sendMessage(plugin.getFiles().getLang("bar_shop.no_space"));
             return false;
         }
         return true;

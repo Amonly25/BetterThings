@@ -4,6 +4,8 @@ thirst:
   disabled: "&7Thirst is disabled for you."
   low: "&bYou are feeling thirsty, you should drink something."
   very_low: "&bYou are feeling very thirsty, you should drink something."
+  should_drink: "&bYou should drink something before do that."
+  no_regain: "I'm too thirsty to regain health."
 
 fatigue:
   toggle: "&7Fatigue has been turned &6%state% &7for you."
@@ -11,4 +13,14 @@ fatigue:
   disabled: "&7Fatigue is disabled for you."
   low: "&cYou are feeling tired, you should rest."
   very_low: "&cYou are feeling very tired, you should rest."
+  should_rest: "&cYou should rest before do that."
+  leave_bed: "Hum... I'm not tired anymore, i have hunger now."
+  cant_sprint: "I'm too tired to sprint."
+  no_regain: "I'm too tired to regain health."
+
+bar_shop:
+  title: "&6&lBar Shop"
+  no_space: "&7You don't have enough space in your inventory."
+  no_money: "&7You don't have enough money to buy this."
+  buy: "&7You bought a &6%item%&7 for &6%cost%."
 

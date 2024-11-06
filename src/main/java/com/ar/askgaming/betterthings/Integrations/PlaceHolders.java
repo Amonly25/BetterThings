@@ -26,6 +26,12 @@ public class PlaceHolders extends PlaceholderExpansion {
         if(identifier.equals("fatigue")){
         	return String.valueOf(plugin.getFatigueManager().getCurrent(player));
         }
+		if(identifier.equals("fatigue_toggle")){
+        	return String.valueOf(plugin.getFatigueManager().hasEnabled(player));
+        }
+		if(identifier.equals("thirst_toggle")){
+        	return String.valueOf(plugin.getThirstManager().hasEnabled(player));
+        }
 		
 		return null;
 	}

@@ -1,15 +1,18 @@
 # Config File - BetterThings - By Ask Gaming(Amonly)
 # If you need help, please contact me on Discord: 
 
+#Thirst max: 200 - Fatigue max: 250 - The decrease task is per minute
+#If you disble constant_action_bar, the plugin will send a message every time the player changues the value of thirst or fatigue
+
 constant_action_bar: true
 
-thirst: # Max 200
-  enable: true
+thirst: 
   emoji: 🍶
-  decrease: 4 # How much thirst will be decreased per minute
+  decrease: 4 
   amount_on_fire_blocks: true
   hurt_when_0: true
   deny_actions:
+    regain_health_below: 25
     nausea_on_place_blocks_below: 50
   deny_actions:
     
@@ -17,10 +20,9 @@ thirst: # Max 200
   - world
   - world_nether
      
-fatigue: # Max 250
-  enable: true
+fatigue: 
   emoji: 🛌
-  decrease: 2 # How much fatigue will be decreased per minute
+  decrease: 2 
   rest_inday_increase: 50
   force_sleep_in_day: true
   hunger_after_sleep: true
@@ -33,3 +35,6 @@ fatigue: # Max 250
   - world
   - world_the_end
 
+others:
+  enable_recipes: true
+  lemon_item_name: "&aLemon"

@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
+import com.ar.askgaming.betterthings.Drinks.Items;
 import com.ar.askgaming.betterthings.Managers.FatigueManager;
 import com.ar.askgaming.betterthings.Managers.ThirstManager;
 
@@ -19,11 +20,24 @@ public class Commands implements TabExecutor {
 	}
 	
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        
-        List<String> list = new ArrayList<>();
-
-        return list;
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+        	
+		switch (cmd.getName().toLowerCase()) {
+			case "thirst":
+			case "fatigue":
+				return List.of("toggle");
+			default:
+				if (args[0].equalsIgnoreCase("set")){
+					return List.of("max_thirst", "max_fatigue", "min_thirst", "min_fatigue");
+				}
+				if (args[0].equalsIgnoreCase("get_item")){
+					List<String> list = new ArrayList<>();
+					for (Items.DrinkType drink : Items.DrinkType.values()) {
+                        list.add(drink.toString().toLowerCase());
+                    }
+				}
+				return List.of("set", "reload","get_item");
+		}
     }
 
 	@Override
@@ -49,10 +63,9 @@ public class Commands implements TabExecutor {
 				handleBetterThingsCommand(p, args);
 				break;
 		}
-
-
-	return false;
+		return false;
 	}
+	
 	private void handleThirstCommand(Player p, String[] args) {
 
 		ThirstManager t = plugin.getThirstManager();
@@ -103,6 +116,14 @@ public class Commands implements TabExecutor {
 			return;
 		}
 
+		if (args.length == 2 && args[0].equalsIgnoreCase("get_item")) {
+			String itemType = args[1].toLowerCase();
+			if (plugin.getItems().getFromString(itemType) != null) {
+				p.getInventory().addItem(plugin.getItems().getFromString(itemType));
+				return;
+			}
+		}
+
 		if (args.length == 3 && args[0].equalsIgnoreCase("set")) {
 			Player target = plugin.getServer().getPlayer(args[2]);
 			if (target == null) {
@@ -114,7 +135,7 @@ public class Commands implements TabExecutor {
 					plugin.getThirstManager().setAttribute(target, 200);
 					break;
 				case "max_fatigue":
-					plugin.getFatigueManager().setAttribute(target, 2050);
+					plugin.getFatigueManager().setAttribute(target, 250);
 					break;		
 				case "min_thirst":
 					plugin.getThirstManager().setAttribute(target, 0);

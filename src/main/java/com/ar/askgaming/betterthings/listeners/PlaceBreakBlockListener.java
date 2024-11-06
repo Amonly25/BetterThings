@@ -35,7 +35,7 @@ public class PlaceBreakBlockListener implements Listener{
             
             if (t.getCurrent(p) < at) {
                 if (!notifiedPlayers.contains(p)) {
-                    p.sendMessage("Quizás deberías beber algo antes de hacer eso");
+                    p.sendMessage(plugin.getFiles().getLang("thirst.should_drink"));
                     notifiedPlayers.add(p);
                     
                     plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
@@ -61,7 +61,7 @@ public class PlaceBreakBlockListener implements Listener{
             if (f.getCurrent(p) < at) {
 
                 if (!notifiedPlayers.contains(p)) {
-                    p.sendMessage("Quizás deberías dormir antes de hacer eso");
+                    p.sendMessage(plugin.getFiles().getLang("fatigue.should_rest"));
                     notifiedPlayers.add(p);
                     
                     plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {

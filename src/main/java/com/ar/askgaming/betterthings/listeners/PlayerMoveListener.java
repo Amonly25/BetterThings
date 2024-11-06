@@ -88,7 +88,7 @@ public class PlayerMoveListener implements Listener{
                 // Envía el mensaje solo si el jugador no ha sido notificado
                 if (!notifiedPlayers.contains(p)) {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20, 1));
-                    p.sendMessage("No puedes correr si estás muy cansado!");
+                    p.sendMessage(plugin.getFiles().getLang("fatigue.cant_sprint"));
                     notifiedPlayers.add(p);
                 } else {
 
