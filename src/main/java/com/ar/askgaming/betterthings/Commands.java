@@ -27,9 +27,10 @@ public class Commands implements TabExecutor {
 			case "fatigue":
 				return List.of("toggle");
 			default:
-				if (args[0].equalsIgnoreCase("set")){
-					return List.of("max_thirst", "max_fatigue", "min_thirst", "min_fatigue");
+				if (args[0].equalsIgnoreCase("set")) {
+					return null;
 				}
+				
 				if (args[0].equalsIgnoreCase("get_item")){
 					List<String> list = new ArrayList<>();
 					for (Items.DrinkType drink : Items.DrinkType.values()) {
@@ -129,28 +130,32 @@ public class Commands implements TabExecutor {
 			}
 		}
 
-		if (args.length == 3 && args[0].equalsIgnoreCase("set")) {
-			Player target = plugin.getServer().getPlayer(args[2]);
+		if (args[0].equalsIgnoreCase("set")) {
+			if (args.length != 4) {
+				p.sendMessage("Invalid usage, use /betterthings set <player> <thirst/fatigue> <amount>");
+				return;
+			}
+			Player target = plugin.getServer().getPlayer(args[1]);
 			if (target == null) {
 				p.sendMessage("Player not found");
 				return;
 			}
-			switch (args[1]) {
-				case "max_thirst":
-					plugin.getThirstManager().setAttribute(target, 200);
-					break;
-				case "max_fatigue":
-					plugin.getFatigueManager().setAttribute(target, 250);
-					break;		
-				case "min_thirst":
-					plugin.getThirstManager().setAttribute(target, 0);
-					break;
-				case "min_fatigue":
-					plugin.getFatigueManager().setAttribute(target, 0);
-					break;		
-				default:
-					p.sendMessage("Invalid argument");
-					break;
+			int amount = 0;
+			try {
+				amount = Integer.parseInt(args[3]);
+			} catch (NumberFormatException e) {
+				p.sendMessage("Invalid number");
+				return;
+			}
+			if (args[2].equalsIgnoreCase("thirst")) {
+				plugin.getThirstManager().setAttribute(target, amount);
+				p.sendMessage("Thirst set to " + amount + " for " + target.getName());
+				return;
+			}
+			if (args[2].equalsIgnoreCase("fatigue")) {
+				plugin.getFatigueManager().setAttribute(target, amount);
+				p.sendMessage("Fatigue set to " + amount + " for " + target.getName());
+				return;
 			}
 			return;
 		}

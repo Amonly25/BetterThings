@@ -18,7 +18,7 @@ public class ActionBarTask extends BukkitRunnable{
     private BetterThings plugin;
     private HashMap<Player, String> emojiMap = new HashMap<>();
     private boolean constantActionBar;
-
+    private boolean disabled;
     public boolean isConstantActionBar() {
         return constantActionBar;
     }
@@ -27,6 +27,7 @@ public class ActionBarTask extends BukkitRunnable{
         plugin = main;
 
         constantActionBar = plugin.getConfig().getBoolean("constant_action_bar");
+        disabled = plugin.getConfig().getBoolean("disable_action_bar", false);
     }
 
     @Override
@@ -76,6 +77,9 @@ public class ActionBarTask extends BukkitRunnable{
         return emojiMap.getOrDefault(p, "");
     }
     public void sendMessage(Player p) {
+        if (disabled) {
+            return;
+        }
         p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacy(getEmojiMessage(p)));
     }
 }

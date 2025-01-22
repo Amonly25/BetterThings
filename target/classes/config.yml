@@ -3,8 +3,10 @@
 
 #Thirst max: 200 - Fatigue max: 250 - The decrease task is per minute
 #If you disble constant_action_bar, the plugin will send a message every time the player changues the value of thirst or fatigue
+#If you disable_action_bar, the plugin will not send any action bar to the player
 #Decay percentage of the lemon item, 0.1 = 10% of decay - #Apple has 0.05 of decay
 constant_action_bar: true
+disable_action_bar: false
 
 thirst: 
   emoji: 🍶
@@ -14,8 +16,6 @@ thirst:
   deny_actions:
     regain_health_below: 25
     nausea_on_place_blocks_below: 50
-  deny_actions:
-    
   enable_worlds:
   - world
   - world_nether
