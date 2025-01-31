@@ -56,7 +56,7 @@ public class FilesManager extends BukkitRunnable{
     }
 
     public String getLang(String path){
-        return ChatColor.translateAlternateColorCodes('&', langConfig.getString(path,"Unknown"));
+        return ChatColor.translateAlternateColorCodes('&', langConfig.getString(path, "Undefined path: " +path));
     }
     public FileConfiguration getItemsConfig() {
         return itemsConfig;

@@ -40,12 +40,7 @@ public class InventoryClickListener implements Listener {
             cloned.setAmount(1);
             int cost = plugin.getItems().getCost(cloned);
 
-            if (plugin.getRealisticEconomy() !=null){
-                plugin.getBarShop().buyToServerBank(p, item, cost);
-            } else if (plugin.getVaultEconomy() != null) {
-                plugin.getBarShop().buyToVault(p, item, cost);
-
-            }
+            plugin.getBarShop().buyToVault(p, item, cost);
         }
     }
 }

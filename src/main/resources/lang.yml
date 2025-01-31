@@ -6,6 +6,7 @@ thirst:
   very_low: "&bYou are feeling very thirsty, you should drink something."
   should_drink: "&bYou should drink something before do that."
   no_regain: "I'm too thirsty to regain health."
+  drink_from_water_block: "&7You drank water from the block."
 
 fatigue:
   toggle: "&7Fatigue has been turned &6%state% &7for you."

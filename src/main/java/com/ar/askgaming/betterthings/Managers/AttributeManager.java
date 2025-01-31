@@ -11,13 +11,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.ar.askgaming.betterthings.BetterThings;
-import com.ar.askgaming.betterthings.Listeners.PlayerMoveListener;
+import com.ar.askgaming.betterthings.Listeners.PlayerListeners.PlayerMoveListener;
 
 public abstract class AttributeManager extends BukkitRunnable{
 
     protected BetterThings plugin;
     protected int decreaseAmount;
     protected int maxAttribute;
+
     protected List<String> enabledWorlds;
     protected final Map<Player, Block> lastBlockStanding = new HashMap<>();
     protected final Map<Player, Integer> attributeMap = new HashMap<>();
@@ -67,7 +68,10 @@ public abstract class AttributeManager extends BukkitRunnable{
         attributeMap.put(p, amount);
         FileConfiguration data = plugin.getFiles().getPlayerDataConfig();
         data.set(p.getName()+"." + getConfigKey() + ".amount", amount);
-        plugin.getActionBar().sendMessage(p);
+
+        if (hasEnabled(p)){
+            plugin.getActionBar().sendMessage(p);
+        }
     }
 
     public void increase(Player p, int amount) {
@@ -112,4 +116,8 @@ public abstract class AttributeManager extends BukkitRunnable{
     protected abstract void handleLowAttribute(Player p);
 
     public abstract String getConfigKey();
+
+    public int getMaxAttribute() {
+        return maxAttribute;
+    }
 }

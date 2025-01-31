@@ -1,4 +1,4 @@
-package com.ar.askgaming.betterthings.Listeners;
+package com.ar.askgaming.betterthings.Listeners.PlayerListeners;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

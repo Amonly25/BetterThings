@@ -1,9 +1,5 @@
 package com.ar.askgaming.betterthings;
 
-import java.util.logging.Level;
-
-import org.bukkit.event.player.PlayerBedEnterEvent;
-import org.bukkit.inventory.Recipe;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,20 +9,20 @@ import com.ar.askgaming.betterthings.Drinks.Recipes;
 import com.ar.askgaming.betterthings.Integrations.PlaceHolders;
 import com.ar.askgaming.betterthings.Listeners.DecayListener;
 import com.ar.askgaming.betterthings.Listeners.InventoryClickListener;
-import com.ar.askgaming.betterthings.Listeners.ItemConsumeListener;
 import com.ar.askgaming.betterthings.Listeners.PlaceBreakBlockListener;
-import com.ar.askgaming.betterthings.Listeners.PlayerBedListeners;
-import com.ar.askgaming.betterthings.Listeners.PlayerDeathListener;
-import com.ar.askgaming.betterthings.Listeners.PlayerJoinListener;
-import com.ar.askgaming.betterthings.Listeners.PlayerMoveListener;
-import com.ar.askgaming.betterthings.Listeners.PlayerQuitListener;
 import com.ar.askgaming.betterthings.Listeners.PrepareItemCraftListener;
 import com.ar.askgaming.betterthings.Listeners.RegainHealthListener;
+import com.ar.askgaming.betterthings.Listeners.PlayerListeners.ItemConsumeListener;
+import com.ar.askgaming.betterthings.Listeners.PlayerListeners.PlayerBedListeners;
+import com.ar.askgaming.betterthings.Listeners.PlayerListeners.PlayerDeathListener;
+import com.ar.askgaming.betterthings.Listeners.PlayerListeners.PlayerInteractListener;
+import com.ar.askgaming.betterthings.Listeners.PlayerListeners.PlayerJoinListener;
+import com.ar.askgaming.betterthings.Listeners.PlayerListeners.PlayerMoveListener;
+import com.ar.askgaming.betterthings.Listeners.PlayerListeners.PlayerQuitListener;
 import com.ar.askgaming.betterthings.Managers.ActionBarTask;
 import com.ar.askgaming.betterthings.Managers.FatigueManager;
 import com.ar.askgaming.betterthings.Managers.FilesManager;
 import com.ar.askgaming.betterthings.Managers.ThirstManager;
-import com.ar.askgaming.realisticeconomy.RealisticEconomy;
 
 import net.milkbowl.vault.economy.Economy;
 
@@ -44,7 +40,6 @@ public class BetterThings extends JavaPlugin{
 
 	//Hooks
 	private Economy vaultEconomy;
-    private RealisticEconomy realisticEconomy;
 
 	public void onEnable() {
 		
@@ -69,11 +64,6 @@ public class BetterThings extends JavaPlugin{
                 getLogger().info("Non economy plugin found!, shop feature disabled.");
             } else vaultEconomy = rsp.getProvider();           
         } 
-
-        if (getServer().getPluginManager().isPluginEnabled("RealisticEconomy")) {
-			getLogger().info("RealisticEconomy found!");
-            realisticEconomy = (RealisticEconomy) getServer().getPluginManager().getPlugin("RealisticEconomy");
-        }
 
 		if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
 			new PlaceHolders(this).register();
@@ -124,6 +114,8 @@ public class BetterThings extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new PlayerBedListeners(this), this);
 		getServer().getPluginManager().registerEvents(new PrepareItemCraftListener(this), this);
 		getServer().getPluginManager().registerEvents(new DecayListener(this), this);
+
+		new PlayerInteractListener(this);
 	}
 	
 	public ThirstManager getThirstManager() {
@@ -147,9 +139,7 @@ public class BetterThings extends JavaPlugin{
 	public Economy getVaultEconomy() {
 		return vaultEconomy;
 	}
-	public RealisticEconomy getRealisticEconomy() {
-		return realisticEconomy;
-	}
+
 	public Recipes getRecipes() {
 		return recipes;
 	}

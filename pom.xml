@@ -6,7 +6,7 @@
 
     <groupId>com.ar.askgaming.betterthings</groupId>
     <artifactId>betterthings</artifactId>
-    <version>2.3</version>
+    <version>2.4</version>
 
     <name>BetterThings</name>
 
@@ -44,15 +44,7 @@
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.ar.askgaming</groupId>
-            <artifactId>RealisticEconomy</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/realisticeconomy-1.0-SNAPSHOT.jar</systemPath>
-        </dependency>
-
+        
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>

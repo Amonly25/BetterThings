@@ -40,14 +40,6 @@ public class BarShop {
       
     }
 
-    public void buyToServerBank(Player p, ItemStack item, double amount) {
-        EconomyResponse response = buyToVault(p, item, amount);
-        if (response.transactionSuccess()) {
-            plugin.getRealisticEconomy().getServerBank().deposit(amount);
-        } else {
-            plugin.getLogger().warning("Error: The server bank could not deposit the money");
-        }
-    }
     public EconomyResponse buyToVault(Player p, ItemStack item, double amount) {
         if (canBuy(p, item, amount)) {
             EconomyResponse response = plugin.getVaultEconomy().withdrawPlayer(p, amount);

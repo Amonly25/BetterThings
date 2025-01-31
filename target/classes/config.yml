@@ -39,3 +39,8 @@ others:
   enable_recipes: true
   lemon_item_name: "&aLemon"
   chance_decay_drop: 0.1
+
+drink_from_water_block: #Drink from water block
+  enable: true
+  value: 10 #10 thirst value
+  chance_to_get_sick: 30 #30%
