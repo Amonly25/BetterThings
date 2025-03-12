@@ -8,39 +8,52 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
+import com.ar.askgaming.betterthings.Attribute.Fatigue;
+import com.ar.askgaming.betterthings.Attribute.Thirst;
 import com.ar.askgaming.betterthings.Drinks.Items;
-import com.ar.askgaming.betterthings.Managers.FatigueManager;
-import com.ar.askgaming.betterthings.Managers.ThirstManager;
 
 public class Commands implements TabExecutor {
 	
 	private BetterThings plugin;
+	private Thirst thirst;
+	private Fatigue fatigue;
 	public Commands(BetterThings main) {
 		plugin = main;
+		thirst = plugin.getAttributeManager().getThirst();
+		fatigue = plugin.getAttributeManager().getFatigue();
+
+		plugin.getServer().getPluginCommand("thirst").setExecutor(this);
+		plugin.getServer().getPluginCommand("fatigue").setExecutor(this);
+		plugin.getServer().getPluginCommand("bar").setExecutor(this);
+		plugin.getServer().getPluginCommand("betterthings").setExecutor(this);
+
 	}
 	
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-        	
+        
 		switch (cmd.getName().toLowerCase()) {
+
 			case "thirst":
 			case "fatigue":
 				return List.of("toggle");
-			default:
-				if (args[0].equalsIgnoreCase("set")) {
-					return null;
+
+			case "betterthings":
+				if (args.length == 1) {
+					return List.of("set", "reload","get_item");
 				}
 				
 				if (args[0].equalsIgnoreCase("get_item")){
 					List<String> list = new ArrayList<>();
 					for (Items.DrinkType drink : Items.DrinkType.values()) {
                         list.add(drink.toString().toLowerCase());
-
                     }
 					list.add("lemon");
 					return list;
 				}
-				return List.of("set", "reload","get_item");
+
+			default:
+				return null;
 		}
     }
 
@@ -72,39 +85,24 @@ public class Commands implements TabExecutor {
 	
 	private void handleThirstCommand(Player p, String[] args) {
 
-		ThirstManager t = plugin.getThirstManager();
-
 		if (args.length == 0) {
-			p.setSleepingIgnored(true);
-			if (t.hasEnabled(p)){
-				p.sendMessage(plugin.getFiles().getLang("thirst.on_cmd")
-				.replace("%amount%", String.valueOf(t.getCurrent(p)))
-				.replace("%percent%", t.getPercent(p)));
-				return;
-			}
-			p.sendMessage(plugin.getFiles().getLang("thirst.disabled"));
+			String value = String.format("%.1f", thirst.getAttribute(p));
+			p.sendMessage(plugin.getFiles().getLang("thirst.on_cmd").replace("%amount%", value).replace("%percent%", thirst.getPercent(p)));
 			
 		} else if (args[0].equalsIgnoreCase("toggle")) {
-			t.toggle(p);
+			thirst.toggle(p);
 		}
 
 	}
 	private void handleFatigueCommand(Player p, String[] args) {
 
-		FatigueManager f = plugin.getFatigueManager();
-
 		if (args.length == 0) {
+			String value = String.format("%.1f", fatigue.getAttribute(p));
 
-			if (f.hasEnabled(p)){
-				p.sendMessage(plugin.getFiles().getLang("fatigue.on_cmd")
-				.replace("%amount%", String.valueOf(f.getCurrent(p)))
-				.replace("%percent%", f.getPercent(p)));
-				return;
-			}
-			p.sendMessage(plugin.getFiles().getLang("fatigue.disabled"));
-
+			p.sendMessage(plugin.getFiles().getLang("fatigue.on_cmd").replace("%amount%", value).replace("%percent%", fatigue.getPercent(p)));
+			
 		} else if (args[0].equalsIgnoreCase("toggle")) {
-			f.toggle(p);
+			fatigue.toggle(p);
 		}
 		
 	}
@@ -116,7 +114,11 @@ public class Commands implements TabExecutor {
 
 		if (args[0].equalsIgnoreCase("reload")) {
 			plugin.reloadConfig();
-			plugin.loadManagers();
+			plugin.getActionBar().reload();
+			thirst.loadData();
+			fatigue.loadData();
+			plugin.getFiles().savePlayerData();
+			plugin.getFiles().reloadFiles();
 			return;
 		}
 
@@ -140,7 +142,7 @@ public class Commands implements TabExecutor {
 				p.sendMessage("Player not found");
 				return;
 			}
-			int amount = 0;
+			double amount = 0;
 			try {
 				amount = Integer.parseInt(args[3]);
 			} catch (NumberFormatException e) {
@@ -148,12 +150,12 @@ public class Commands implements TabExecutor {
 				return;
 			}
 			if (args[2].equalsIgnoreCase("thirst")) {
-				plugin.getThirstManager().setAttribute(target, amount);
+				thirst.setAttribute(target, amount);
 				p.sendMessage("Thirst set to " + amount + " for " + target.getName());
 				return;
 			}
 			if (args[2].equalsIgnoreCase("fatigue")) {
-				plugin.getFatigueManager().setAttribute(target, amount);
+				fatigue.setAttribute(target, amount);
 				p.sendMessage("Fatigue set to " + amount + " for " + target.getName());
 				return;
 			}

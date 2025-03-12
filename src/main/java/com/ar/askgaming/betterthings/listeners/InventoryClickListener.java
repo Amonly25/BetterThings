@@ -38,7 +38,7 @@ public class InventoryClickListener implements Listener {
             
             ItemStack cloned = item.clone();
             cloned.setAmount(1);
-            int cost = plugin.getItems().getCost(cloned);
+            double cost = plugin.getItems().getCost(cloned);
 
             plugin.getBarShop().buyToVault(p, item, cost);
         }

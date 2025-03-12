@@ -1,4 +1,4 @@
-package com.ar.askgaming.betterthings.Integrations;
+package com.ar.askgaming.betterthings.Utils;
 
 import org.bukkit.entity.Player;
 
@@ -21,19 +21,21 @@ public class PlaceHolders extends PlaceholderExpansion {
         }
 
         if(identifier.equals("thirst")){
-        	return String.valueOf(plugin.getThirstManager().getCurrent(player));
+			String thirst = String.format("%.1f", plugin.getAttributeManager().getThirst().getAttribute(player));
+			return thirst;
         }
         if(identifier.equals("fatigue")){
-        	return String.valueOf(plugin.getFatigueManager().getCurrent(player));
+			String fatigue = String.format("%.1f", plugin.getAttributeManager().getFatigue().getAttribute(player));
+			return fatigue;
         }
-		if(identifier.equals("fatigue_toggle")){
-        	return String.valueOf(plugin.getFatigueManager().hasEnabled(player));
+		if(identifier.equals("fatigue_enabled")){
+        	return String.valueOf(plugin.getAttributeManager().getFatigue().hasEnabled(player));
         }
-		if(identifier.equals("thirst_toggle")){
-        	return String.valueOf(plugin.getThirstManager().hasEnabled(player));
+		if(identifier.equals("thirst_enabled")){
+        	return String.valueOf(plugin.getAttributeManager().getThirst().hasEnabled(player));
         }
 		
-		return null;
+		return "Invalid Placeholder";
 	}
 	
     @Override
@@ -52,12 +54,10 @@ public class PlaceHolders extends PlaceholderExpansion {
 	}
 	@Override
 	public String getIdentifier() {
-		// TODO Auto-generated method stub
 		return "betterthings";
 	}
 	@Override
 	public String getVersion() {
-		// TODO Auto-generated method stub
-		return "1.0";
+		return "1.2";
 	}
 }

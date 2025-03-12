@@ -13,6 +13,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ar.askgaming.betterthings.BetterThings;
+import com.ar.askgaming.betterthings.Attribute.Thirst;
 
 public class PlayerInteractListener implements Listener {
 
@@ -29,8 +30,8 @@ public class PlayerInteractListener implements Listener {
         if (!p.isSneaking()) {
             return;
         }
-
-        if (!plugin.getThirstManager().hasEnabled(p)){
+        Thirst t = plugin.getAttributeManager().getThirst();
+        if (!t.hasEnabled(p)){
             return;
         }
         if (e.getHand() == EquipmentSlot.OFF_HAND) {
@@ -48,17 +49,17 @@ public class PlayerInteractListener implements Listener {
                 if (e.getAction() == Action.RIGHT_CLICK_AIR|| e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
                     Boolean enabled = plugin.getConfig().getBoolean("drink_from_water_block.enable",true);
-                    int value = plugin.getConfig().getInt("drink_from_water_block.value",10);
+                    double value = plugin.getConfig().getInt("drink_from_water_block.value",4);
                     double chance = plugin.getConfig().getDouble("drink_from_water_block.chance_to_get_sick",30);
 
                     if (!enabled) {
                         return;
                     }
-                    if (plugin.getThirstManager().getCurrent(p) >= plugin.getThirstManager().getMaxAttribute()) {
+                    if (t.getAttribute(p) >= t.getMaxAttribute()) {
                         return;
                     }
                     p.sendMessage(plugin.getFiles().getLang("thirst.drink_from_water_block"));
-                    plugin.getThirstManager().increase(p, value);
+                    t.increase(p, value);
 
                     double random = Math.random() * 100;
                     if (random < chance) {

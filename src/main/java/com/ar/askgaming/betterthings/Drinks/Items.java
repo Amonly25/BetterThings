@@ -1,6 +1,5 @@
 package com.ar.askgaming.betterthings.Drinks;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.bukkit.Color;
@@ -92,26 +91,26 @@ public class Items {
         }
         return Color.BLUE;
     }
-    private int getValueFromConfig(ItemStack item, String valueType) {
+    private Double getValueFromConfig(ItemStack item, String valueType) {
         if (item.hasItemMeta()) {
             PotionMeta meta = (PotionMeta) item.getItemMeta();
             if (meta.getPersistentDataContainer().has(key, PersistentDataType.STRING)) {
                 String drinkType = meta.getPersistentDataContainer().get(key, PersistentDataType.STRING);
-                return plugin.getFiles().getItemsConfig().getInt(drinkType + "." + valueType, 0);
+                return plugin.getFiles().getItemsConfig().getDouble(drinkType + "." + valueType, 0);
             }
         }
-        return 0;
+        return 0.0;
     }
     
-    public int getCost(ItemStack item) {
+    public Double getCost(ItemStack item) {
         return getValueFromConfig(item, "shop_cost");
     }
     
-    public int thirstValue(ItemStack item) {
+    public Double thirstValue(ItemStack item) {
         return getValueFromConfig(item, "thirst_value");
     }
     
-    public int fatigueValue(ItemStack item) {
+    public Double fatigueValue(ItemStack item) {
         return getValueFromConfig(item, "fatigue_value");
     }
     public boolean isDrink(ItemStack item) {

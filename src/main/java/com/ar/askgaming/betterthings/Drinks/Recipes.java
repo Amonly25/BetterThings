@@ -1,19 +1,13 @@
 package com.ar.askgaming.betterthings.Drinks;
 
-import java.util.jar.Attributes.Name;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 
 import com.ar.askgaming.betterthings.BetterThings;
 import com.ar.askgaming.betterthings.Drinks.Items.DrinkType;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class Recipes {
     

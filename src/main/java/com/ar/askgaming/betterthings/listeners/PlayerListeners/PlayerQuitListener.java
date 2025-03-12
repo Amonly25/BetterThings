@@ -1,6 +1,5 @@
 package com.ar.askgaming.betterthings.Listeners.PlayerListeners;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -14,16 +13,7 @@ public class PlayerQuitListener implements Listener{
         plugin = main;
     }
     @EventHandler()
-    public void onQuit(PlayerQuitEvent e) {
-
-        Player p = e.getPlayer();
-        
-       if (plugin.getThirstManager().getMap().containsKey(p)){
-            plugin.getThirstManager().getMap().remove(p);        
-       }
-
-       if (plugin.getFatigueManager().getMap().containsKey(p)){
-            plugin.getFatigueManager().getMap().remove(p);        
-       }
+    public void onQuit(PlayerQuitEvent e) {        
+       plugin.getFiles().savePlayerData();
     }
 }

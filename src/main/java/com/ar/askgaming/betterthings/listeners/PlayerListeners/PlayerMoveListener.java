@@ -1,22 +1,20 @@
 package com.ar.askgaming.betterthings.Listeners.PlayerListeners;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityToggleSwimEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import com.ar.askgaming.betterthings.BetterThings;
-import com.ar.askgaming.betterthings.Managers.FatigueManager;
-import com.ar.askgaming.betterthings.Managers.ThirstManager;
+import com.ar.askgaming.betterthings.Attribute.Fatigue;
+import com.ar.askgaming.betterthings.Attribute.Thirst;
 
 public class PlayerMoveListener implements Listener{
 
@@ -25,18 +23,16 @@ public class PlayerMoveListener implements Listener{
         plugin = main;
     }
 
-    private List<Player> notifiedPlayers = new ArrayList<>();
-
     public static final Map<Player, Block> lastBlockStanding = new HashMap<>();
 
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
         
-        ThirstManager t = plugin.getThirstManager();
-        if (t.hasEnabled(p) && t.isInEnabledWorld(p)) {
+        Thirst t = plugin.getAttributeManager().getThirst();
+        if (t.hasEnabled(p)) {
             
-            boolean b = plugin.getConfig().getBoolean("thirst.amount_on_fire_blocks",true);
+            boolean b = plugin.getConfig().getBoolean("thirst.increase_on_fire_blocks",true);
             if (b) {
                 switch (p.getLocation().getBlock().getType()) {
                     case LAVA:                   
@@ -47,7 +43,7 @@ public class PlayerMoveListener implements Listener{
                     case SOUL_TORCH:         
                     case TORCH:
                         p.setFireTicks(20);      
-                        t.decrease(p, 1);
+                        t.decrease(p, 0.1);
                         break;
                     default:
                         break;
@@ -69,29 +65,54 @@ public class PlayerMoveListener implements Listener{
 		
 		Player p = (Player) e.getPlayer();
 				
-        if (p.isSprinting()) {
+        if (!e.isSprinting()) {
             return;
         }
 
-        FatigueManager f = plugin.getFatigueManager();
+        Fatigue f = plugin.getAttributeManager().getFatigue();
+        Thirst t = plugin.getAttributeManager().getThirst();
 
-        if (f.hasEnabled(p) && f.isInEnabledWorld(p)) {
+        if (t.hasEnabled(p)) {
+            t.decrease(p, 0.1);
+        }
 
-            int at = plugin.getConfig().getInt("fatigue.deny_actions.cancel_sprint_below",50);
+        if (f.hasEnabled(p)) {
+            f.decrease(p, 0.1);
+            double at = plugin.getConfig().getInt("fatigue.cancel_sprint_below",5);
 
-            if (f.getCurrent(p) < at) {
+            if (f.getAttribute(p) < at) {
                 e.setCancelled(true);
-                f.decrease(p, 1);
-                // Envía el mensaje solo si el jugador no ha sido notificado
-                if (!notifiedPlayers.contains(p)) {
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20, 1));
-                    p.sendMessage(plugin.getFiles().getLang("fatigue.cant_sprint"));
-                    notifiedPlayers.add(p);
-                } else {
-
-                    notifiedPlayers.remove(p);
-                }
+               // plugin.getLogger().info("Sprint cancelled");
             }
         }
 	}  
+    @EventHandler
+	public void onSprint(EntityToggleSwimEvent e){
+		
+		Entity entity = e.getEntity();
+        if (!(entity instanceof Player)) {
+            return;
+        }
+        Player p = (Player) entity;
+				
+        if (!e.isSwimming()) {
+            return;
+        }
+
+        Fatigue f = plugin.getAttributeManager().getFatigue();
+        Thirst t = plugin.getAttributeManager().getThirst();
+        
+        if (t.hasEnabled(p)) {
+            t.decrease(p, 0.1);
+        }
+
+        if (f.hasEnabled(p)) {
+            f.decrease(p, 0.1);
+            double at = plugin.getConfig().getInt("fatigue.cancel_swim_below",5);
+
+            if (f.getAttribute(p) < at) {
+                e.setCancelled(true);
+            }
+        }
+	} 
 }

@@ -13,8 +13,8 @@ import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
 
 public class BarShop {
 
-    private BetterThings plugin;
-    private Inventory inv;
+    private final BetterThings plugin;
+    private final Inventory inv;
     
     public Inventory getInv() {
         return inv;

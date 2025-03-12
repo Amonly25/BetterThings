@@ -6,6 +6,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import com.ar.askgaming.betterthings.BetterThings;
+import com.ar.askgaming.betterthings.Attribute.Fatigue;
+import com.ar.askgaming.betterthings.Attribute.Thirst;
 
 public class PlayerDeathListener implements Listener{
 
@@ -16,8 +18,11 @@ public class PlayerDeathListener implements Listener{
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
-        plugin.getThirstManager().setAttribute(p, 200);
-        plugin.getFatigueManager().setAttribute(p, 250);
-    }
-    
+        
+        Thirst t = plugin.getAttributeManager().getThirst();
+        t.setAttribute(p, t.getMaxAttribute());
+        Fatigue f = plugin.getAttributeManager().getFatigue();
+        f.setAttribute(p, f.getMaxAttribute());
+
+    } 
 }

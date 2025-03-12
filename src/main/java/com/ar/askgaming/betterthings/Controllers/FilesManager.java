@@ -1,17 +1,15 @@
-package com.ar.askgaming.betterthings.Managers;
+package com.ar.askgaming.betterthings.Controllers;
 
 import java.io.File;
-import java.util.logging.Level;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import com.ar.askgaming.betterthings.BetterThings;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class FilesManager extends BukkitRunnable{
+public class FilesManager{
     
     private BetterThings plugin;
 
@@ -25,6 +23,9 @@ public class FilesManager extends BukkitRunnable{
         itemsFile = createFile("drinks.yml");
         langFile = createFile("lang.yml");
 
+        reloadFiles();
+    }
+    public void reloadFiles(){
         playerDataConfig = loadConfiguration(playerData);
         itemsConfig = loadConfiguration(itemsFile);
         langConfig = loadConfiguration(langFile);
@@ -39,12 +40,7 @@ public class FilesManager extends BukkitRunnable{
     }
 
     private FileConfiguration loadConfiguration(File file) {
-        FileConfiguration config = new YamlConfiguration();
-        try {
-            config.load(file);
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "Could not load configuration from file: " + file.getName(), e);
-        }
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         return config;
     }
     public void savePlayerData(){
@@ -64,10 +60,5 @@ public class FilesManager extends BukkitRunnable{
 
     public FileConfiguration getPlayerDataConfig() {
         return playerDataConfig;
-    }
-
-    @Override
-    public void run() {
-        savePlayerData();
     }
 }

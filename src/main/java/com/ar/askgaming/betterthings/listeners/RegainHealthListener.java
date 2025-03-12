@@ -1,6 +1,5 @@
 package com.ar.askgaming.betterthings.Listeners;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 
 import com.ar.askgaming.betterthings.BetterThings;
-import com.ar.askgaming.betterthings.Managers.AttributeManager;
+import com.ar.askgaming.betterthings.Attribute.AttributeAbstract;
 
 public class RegainHealthListener implements Listener {
 
@@ -19,30 +18,24 @@ public class RegainHealthListener implements Listener {
         plugin = main;
     }
 
-    private List<Player> notifiedPlayers = new ArrayList<>();
-
-@EventHandler
-public void onRegainHealth(EntityRegainHealthEvent e) {
-    if (e.getEntity() instanceof Player) {
-        Player p = (Player) e.getEntity();
-        
-        List<AttributeManager> managers = Arrays.asList(plugin.getFatigueManager(), plugin.getThirstManager());
-        
-        for (AttributeManager manager : managers) {
-            if (manager.hasEnabled(p) && manager.isInEnabledWorld(p)) {
-                int threshold = plugin.getConfig().getInt(manager.getConfigKey() + ".deny_actions.regain_health_below", 25);
-                
-                if (manager.getCurrent(p) < threshold) {
-                    e.setCancelled(true);
-                    if (!notifiedPlayers.contains(p)) {
-                        p.sendMessage(plugin.getFiles().getLang(manager.getConfigKey() + ".no_regain"));
-                        notifiedPlayers.add(p);
-                        
-                        plugin.getServer().getScheduler().runTaskLater(plugin, () -> notifiedPlayers.remove(p), 200L);
+    @EventHandler
+    public void onRegainHealth(EntityRegainHealthEvent e) {
+        if (e.getEntity() instanceof Player) {
+            Player p = (Player) e.getEntity();
+            
+            List<AttributeAbstract> managers = Arrays.asList(plugin.getAttributeManager().getThirst(), plugin.getAttributeManager().getFatigue());
+            
+            for (AttributeAbstract manager : managers) {
+                if (manager.hasEnabled(p)) {
+                    manager.decrease(p, 1.0);
+                    double threshold = plugin.getConfig().getInt(manager.getConfigKey() + ".cancel_regain_health_below", 4);
+                    
+                    if (manager.getAttribute(p) < threshold) {
+                        e.setCancelled(true);
                     }
                 }
             }
         }
-    }
-}  
+    }  
 }
+
