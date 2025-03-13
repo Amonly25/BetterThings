@@ -1,15 +1,15 @@
 package com.ar.askgaming.betterthings.Listeners;
 
+import java.net.http.WebSocket.Listener;
 import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 
-import com.ar.askgaming.betterthings.BetterThings;
 import com.ar.askgaming.betterthings.Attribute.AttributeAbstract;
+import com.ar.askgaming.betterthings.BetterThings;
 
 public class RegainHealthListener implements Listener {
 
@@ -27,7 +27,7 @@ public class RegainHealthListener implements Listener {
             
             for (AttributeAbstract manager : managers) {
                 if (manager.hasEnabled(p)) {
-                    manager.decrease(p, 1.0);
+                    manager.decrease(p, 0.1);
                     double threshold = plugin.getConfig().getInt(manager.getConfigKey() + ".cancel_regain_health_below", 4);
                     
                     if (manager.getAttribute(p) < threshold) {
