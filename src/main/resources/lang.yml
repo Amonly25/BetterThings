@@ -2,6 +2,7 @@ thirst:
   toggle: "&7Thirst has been turned &6%state% &7for you."
   on_cmd: "&7Thirst: &b%amount%/20 - %percent%%."
   drink_from_water_block: "&7You drank water from the block."
+  no_empty_hand: "&cIt's impossible to drink with an item in your hand."
 
 fatigue:
   toggle: "&7Fatigue has been turned &6%state% &7for you."

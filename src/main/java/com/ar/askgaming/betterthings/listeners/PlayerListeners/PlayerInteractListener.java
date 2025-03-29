@@ -1,6 +1,7 @@
 package com.ar.askgaming.betterthings.Listeners.PlayerListeners;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,7 +37,6 @@ public class PlayerInteractListener implements Listener {
         }
         if (e.getHand() == EquipmentSlot.OFF_HAND) {
             return;
-
         }
         
         ItemStack item = p.getInventory().getItemInMainHand();
@@ -44,29 +44,36 @@ public class PlayerInteractListener implements Listener {
 
         if (targetBlock.getType() == Material.WATER) {
 
-            if (item == null || item.getType() == Material.AIR) {
+            if (e.getAction() == Action.RIGHT_CLICK_AIR|| e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
-                if (e.getAction() == Action.RIGHT_CLICK_AIR|| e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                Boolean enabled = plugin.getConfig().getBoolean("drink_from_water_block.enable",true);
+                double value = plugin.getConfig().getInt("drink_from_water_block.value",4);
+                double chance = plugin.getConfig().getDouble("drink_from_water_block.chance_to_get_sick",30);
 
-                    Boolean enabled = plugin.getConfig().getBoolean("drink_from_water_block.enable",true);
-                    double value = plugin.getConfig().getInt("drink_from_water_block.value",4);
-                    double chance = plugin.getConfig().getDouble("drink_from_water_block.chance_to_get_sick",30);
 
-                    if (!enabled) {
-                        return;
-                    }
-                    if (t.getAttribute(p) >= t.getMaxAttribute()) {
-                        return;
-                    }
-                    p.sendMessage(plugin.getFiles().getLang("thirst.drink_from_water_block"));
-                    t.increase(p, value);
-
-                    double random = Math.random() * 100;
-                    if (random < chance) {
-                        p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 40, 1));
-                    }
+                if (!enabled) {
+                    return;
                 }
-            }
+
+                if (t.getAttribute(p) >= t.getMaxAttribute()) {
+                    return;
+                }
+
+                if (item != null && item.getType() != Material.AIR) {
+                    p.sendMessage(plugin.getFiles().getLang("thirst.no_empty_hand"));
+                    return;
+                }
+
+                p.sendMessage(plugin.getFiles().getLang("thirst.drink_from_water_block"));
+                t.increase(p, value);
+                p.playSound(p.getLocation(), Sound.ITEM_HONEY_BOTTLE_DRINK, 1, 1);
+                targetBlock.setType(Material.AIR);
+
+                double random = Math.random() * 100;
+                if (random < chance) {
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 40, 1));
+                }
+            }           
         }
     }
 }

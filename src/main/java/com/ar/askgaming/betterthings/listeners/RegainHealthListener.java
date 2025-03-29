@@ -1,11 +1,11 @@
 package com.ar.askgaming.betterthings.Listeners;
 
-import java.net.http.WebSocket.Listener;
 import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 
 import com.ar.askgaming.betterthings.Attribute.AttributeAbstract;

@@ -68,9 +68,13 @@ public class AttributeManager{
     }
     private void sendCommandIfExist(String configKey, int value, Player player) {
         FileConfiguration config = plugin.getConfig();
-        String command = config.getString(configKey + ".values." + value + ".commands");
-        if (command != null) {
-            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), command.replace("%player%", player.getName()));
+        List<String> commands = config.getStringList(configKey + ".values." + value + ".commands");
+        for (String cmd : commands) {
+            if (cmd == null || cmd.isEmpty()) {
+                continue;
+            }
+
+            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), cmd.replace("%player%", player.getName()));
         }
     }
     private void addPotionEffect(String configKey, int value, Player player) {
